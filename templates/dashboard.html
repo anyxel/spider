@@ -1,0 +1,25 @@
+{% extends 'bootstrap.html' %}
+
+{% block title %} Run Command {% endblock %}
+
+{% block content %}
+
+  <div class="pt-4">
+
+    <form action="" method="get">
+
+      <div class="input-group mb-3">
+        <input type="text" class="form-control" placeholder="Write a command" name="cmd" value="{{ command }}">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary" type="submit">Submit</button>
+        </div>
+      </div>
+    </form>
+
+    <code>
+      <pre>{{ output }}</pre>
+    </code>
+
+  </div>
+
+{% endblock %}

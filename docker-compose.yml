@@ -5,10 +5,14 @@ services:
   spider:
     build:
       context: .
+      args:
+        options: --reload
       dockerfile: Dockerfile
     image: spider
     container_name: spider
-    command: gunicorn spider.wsgi:application --bind 0.0.0.0:8000
+    restart: always
+    volumes:
+      - ./:/app
+    command: gunicorn spider.wsgi:application -b 0.0.0.0:8000 --reload
     ports:
-      - "8000:8000"
-    restart: "always"
+      - "8001:8000"

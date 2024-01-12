@@ -17,8 +17,11 @@ RUN echo 2 | update-alternatives --config python3
 RUN dnf install python3-pip -y \
     && python3 -m ensurepip --upgrade
 
+# Install git
+#RUN dnf install git -y
+
 # Workdir
-ENV APP_HOME=/var/www/html
+ENV APP_HOME=/app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 

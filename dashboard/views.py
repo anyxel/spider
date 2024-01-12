@@ -1,4 +1,3 @@
-from django.http import HttpResponse
 from django.shortcuts import render
 
 from spider.helper import run_command
@@ -13,17 +12,7 @@ def index(request):
         command = ''
         output = ''
 
-    return render(request, "command.html", {
+    return render(request, "dashboard.html", {
         'command': command,
         'output': output,
     })
-    # return HttpResponse('k:' + output)
-
-
-def test(request):
-    # nmap = nmap3.Nmap()
-    # results = nmap.scan_top_ports("anyxel.com")
-    #
-    # print(results)
-
-    return HttpResponse('k:')
