@@ -2,8 +2,6 @@ asgiref==3.7.2
 Django==5.0.1
 gunicorn==21.2.0
 packaging==23.2
-python3-nmap==1.6.0
 simplejson==3.19.2
-sqlmap==1.8
 sqlparse==0.4.4
 tzdata==2023.4

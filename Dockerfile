@@ -3,13 +3,7 @@ FROM almalinux:9-minimal
 LABEL maintainer="anyxel@proton.me"
 
 RUN microdnf install dnf -y
-RUN dnf update -y
-RUN dnf upgrade -y
-
-# Install extra packages
-RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
-RUN dnf install https://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
-RUN dnf install which -y
+RUN dnf update -y && dnf upgrade -y
 
 # Install Python
 RUN dnf install python3.11 -y
@@ -33,7 +27,4 @@ COPY ./ $APP_HOME
 
 # Install dependencies
 RUN cd $APP_HOME \
-    && pip install -r requirements.txt
-
-# tools
-RUN dnf install nmap -y
+    && pip install --no-cache-dir -r requirements.txt
