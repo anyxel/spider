@@ -1,29 +1,39 @@
-# pull official base image
-FROM python:3.9.6-alpine
+FROM almalinux:9-minimal
 
-# set work directory
-WORKDIR /usr/src/app
+LABEL maintainer="anyxel@proton.me"
 
-# set environment variables
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
+RUN microdnf install dnf -y
+RUN dnf update -y
+RUN dnf upgrade -y
 
-# install psycopg2 dependencies
-RUN apk update \
-    && apk add postgresql-dev gcc python3-dev musl-dev
+# Install extra packages
+RUN dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm -y
+RUN dnf install https://rpms.remirepo.net/enterprise/remi-release-9.rpm -y
+RUN dnf install which -y
 
-# install dependencies
-RUN pip install --upgrade pip
-COPY ./requirements.txt .
-RUN pip install -r requirements.txt
+# Install Python
+RUN dnf install python3.11 -y
 
-# copy entrypoint.sh
-COPY ./entrypoint.sh .
-RUN sed -i 's/\r$//g' /usr/src/app/entrypoint.sh
-RUN chmod +x /usr/src/app/entrypoint.sh
+# Set python3.11 as python/python3 command
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1
+RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.11 2
+RUN echo 2 | update-alternatives --config python3
+
+# Install pip
+RUN dnf install python3-pip -y \
+    && python3 -m ensurepip --upgrade
+
+# Workdir
+ENV APP_HOME=/var/www/html
+RUN mkdir -p $APP_HOME
+WORKDIR $APP_HOME
 
 # copy project
-COPY . .
+COPY ./ $APP_HOME
 
-# run entrypoint.sh
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+# Install dependencies
+RUN cd $APP_HOME \
+    && pip install -r requirements.txt
+
+# tools
+RUN dnf install nmap -y
