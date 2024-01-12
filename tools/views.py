@@ -3,8 +3,6 @@ from django.shortcuts import render
 
 from spider.helper import run_command
 
-import nmap3
-
 
 def index(request):
     command = request.GET.get('cmd')
@@ -23,9 +21,9 @@ def index(request):
 
 
 def test(request):
-    nmap = nmap3.Nmap()
-    results = nmap.scan_top_ports("anyxel.com")
-
-    print(results)
+    # nmap = nmap3.Nmap()
+    # results = nmap.scan_top_ports("anyxel.com")
+    #
+    # print(results)
 
     return HttpResponse('k:')
