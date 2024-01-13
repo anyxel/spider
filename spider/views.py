@@ -1,10 +1,18 @@
 from django.shortcuts import render
 
-from spider.helper import run_command
+from core.helper import run_command
 
 
 def index(request):
     return render(request, "home.html", {})
+
+
+def setup(request):
+    output = run_command('./setup.sh')
+
+    return render(request, "setup.html", {
+        'output': output,
+    })
 
 
 def run(request):

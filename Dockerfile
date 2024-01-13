@@ -17,8 +17,11 @@ RUN echo 2 | update-alternatives --config python3
 RUN dnf install python3-pip -y \
     && python3 -m ensurepip --upgrade
 
-# Install git
-#RUN dnf install git -y
+# Install golang
+RUN dnf install go -y
+
+# Install sqlite
+RUN dnf install sqlite -y && sqlite3 db.sqlite3 ""
 
 # Workdir
 ENV APP_HOME=/app
@@ -31,3 +34,6 @@ COPY ./ $APP_HOME
 # Install dependencies
 RUN cd $APP_HOME \
     && pip install --no-cache-dir -r requirements.txt
+
+# Extra
+RUN chmod +x *.sh

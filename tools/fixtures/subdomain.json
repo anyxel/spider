@@ -1,0 +1,14 @@
+[
+  {
+    "model": "tools.tools",
+    "pk": 1,
+    "fields": {
+      "name": "Sublist3r",
+      "lang": "python",
+      "url": "https://github.com/aboul3la/Sublist3r/archive/master.zip",
+      "folder": "Sublist3r-master",
+      "filename": "sublist3r.py",
+      "has_dependencies": "True"
+    }
+  }
+]
