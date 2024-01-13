@@ -19,12 +19,15 @@ def get_tool(name):
     return repositories[name]
 
 
-def install_dependencies(repo_path):
-    try:
-        command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
-        print(command)
-
-        output = run_command(command)
-    except Exception as e:
-        error_message = str(e.args[0]) if e.args else "An unknown error occurred"
-        print(error_message)
+# def install_dependencies(repo_path):
+#     try:
+#         command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
+#         print(command)
+#
+#         output = run_command(command)
+#
+#         print('ModuleNotFoundError')
+#     except Exception as e:
+#         error_message = str(e.args[0]) if e.args else "An unknown error occurred"
+#
+#         print(error_message)

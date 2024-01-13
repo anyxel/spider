@@ -18,8 +18,33 @@ def is_file_exists(filepath):
         return False
 
 
-def download_and_unzip(url, extract_to='.'):
-    http_response = urlopen(url)
+def download_and_unzip(tool):
+    print('Downloading ' + str(tool.name) + '...')
+
+    http_response = urlopen(tool.url)
     zipfile = ZipFile(BytesIO(http_response.read()))
+
+    print('Extracting...')
+    extract_to = 'external-tools'
     zipfile.extractall(path=extract_to)
 
+    if tool.has_dependencies:
+        repo_path = extract_to + '/' + tool.folder
+        install_dependencies(repo_path)
+    else:
+        print('Successfully installed!')
+
+
+def install_dependencies(repo_path):
+    print('Installing dependencies...')
+
+    try:
+        command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
+
+        run_command(command)
+
+        print('Successfully installed!')
+    except Exception as e:
+        error_message = str(e.args[0]) if e.args else "An unknown error occurred"
+
+        print(error_message)

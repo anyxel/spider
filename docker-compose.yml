@@ -5,8 +5,6 @@ services:
   spider:
     build:
       context: .
-      args:
-        options: --reload
       dockerfile: Dockerfile
     image: spider
     container_name: spider
@@ -14,6 +12,5 @@ services:
     volumes:
       - ./:/app
     command: gunicorn spider.wsgi:application -b 0.0.0.0:8000 --reload
-#    command: python manage.py runserver 0.0.0.0:8000
     ports:
       - "8001:8000"
