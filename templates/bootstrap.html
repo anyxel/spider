@@ -25,6 +25,22 @@
   {% endblock %}
 </div>
 
+<script>
+  const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
+
+  webSocket.onopen = function (event) {
+    console.log('WebSocket connection opened:', event);
+  };
+
+  webSocket.onmessage = function (event) {
+    console.log('Received message from server:', event.data);
+  };
+
+  webSocket.onclose = function (event) {
+    console.log('WebSocket connection closed:', event);
+  };
+</script>
+
 </body>
 
 </html>

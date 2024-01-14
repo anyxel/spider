@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from core.helper import run_command, is_file_exists, download_and_unzip
+from core.helper import run_command, is_file_exists, download_and_unzip, send_message_to_websocket, install_dependencies
 from tools.models import Tools
 
 
@@ -35,9 +35,18 @@ def index(request):
             if get_cmd:
                 command = lang + ' ' + filepath + ' ' + get_cmd
                 output = run_command(command)
+
+                send_message_to_websocket(output)
         except Exception as e:
             error_message = str(e.args[0]) if e.args else "An unknown error occurred"
             print(error_message)
+
+            if "ModuleNotFoundError" in error_message:
+                error_message = "ModuleNotFoundError" + '\n'
+
+                error_message += "Installing the modules..."
+
+                install_dependencies(repo_path)
 
     except Tools.DoesNotExist:
         error_message = "Tool not found"

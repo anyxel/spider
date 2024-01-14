@@ -11,6 +11,13 @@ services:
     restart: always
     volumes:
       - ./:/app
-    command: gunicorn spider.wsgi:application -b 0.0.0.0:8000 --reload
+    command: daphne -b 0.0.0.0 -p 8000 spider.asgi:application
     ports:
       - "8001:8000"
+    networks:
+      - anyxel
+
+# networks
+networks:
+  anyxel:
+    driver: bridge

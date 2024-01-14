@@ -3,10 +3,11 @@ FROM almalinux:latest
 LABEL maintainer="anyxel@proton.me"
 
 RUN dnf update -y && dnf upgrade -y
-RUN dnf install yum-utils -y \
-    && dnf install epel-release -y
 
-RUN dnf install gcc make -y
+# Install necessay tools
+RUN dnf install yum-utils -y \
+    && dnf install epel-release -y \
+    && dnf install gcc make -y
 
 # Install Python
 RUN dnf install python3.11 -y
@@ -23,14 +24,10 @@ RUN ln -s /usr/bin/python3 /usr/bin/python
 RUN dnf install python3-pip -y \
     && python3 -m ensurepip --upgrade
 
-# Install golang
-# RUN dnf install go -y
-
-# Install ruby
-# RUN dnf install ruby ruby-devel rubygems -y
-
 # Install sqlite
 RUN dnf install sqlite -y && sqlite3 db.sqlite3 ""
+
+RUN pip install daphne
 
 # Workdir
 ENV APP_HOME=/app

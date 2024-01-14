@@ -3,6 +3,10 @@ import subprocess
 from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
+import json
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+from django.http import HttpResponse
 
 
 def run_command(cmd, input=""):
@@ -48,3 +52,15 @@ def install_dependencies(repo_path):
         error_message = str(e.args[0]) if e.args else "An unknown error occurred"
 
         print(error_message)
+
+
+def send_message_to_websocket(message):
+    channel_layer = get_channel_layer()
+
+    async_to_sync(channel_layer.group_send)(
+        "terminal",
+        {
+            "type": "chat.message",
+            "message": message,
+        },
+    )

@@ -19,7 +19,11 @@ def run(request):
     command = request.GET.get('cmd')
 
     if command:
-        output = run_command(command)
+        try:
+            output = run_command(command)
+        except Exception as e:
+            error_message = str(e.args[0]) if e.args else "An unknown error occurred"
+            output = error_message
     else:
         command = ''
         output = ''
