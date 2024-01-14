@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import render
 
 from core.helper import run_command, is_file_exists, download_and_unzip, send_message_to_websocket, install_dependencies
@@ -8,51 +9,61 @@ def index(request):
     output = ''
     error_message = ''
 
-    get_tool_name = request.GET.get('name')
-    get_cmd = request.GET.get('cmd')
+    get_tool_name = request.POST.get('name')
+    get_cmd = request.POST.get('cmd')
 
-    if (not get_tool_name) or (not get_cmd):
+    # Index
+    if request.method == 'GET':
         return render(request, "tools.html", {
             'command': get_cmd,
             'output': output,
-            'error_message': 'Select a tool and enter command!',
+            'error_message': error_message,
         })
 
-    try:
-        tool = Tools.objects.get(name=str(get_tool_name))
+    # POST method
+    if request.method == 'POST':
+        data = {
+            'message': 'Hello, this is a JSON response!',
+            'status': 'success'
+        }
 
-        lang = tool.lang
-        repo_path = 'external-tools/' + tool.folder
-        filepath = repo_path + '/' + tool.filename
+        send_message_to_websocket(get_cmd)
+        send_message_to_websocket(get_tool_name)
 
-        # Check program is installed
-        check = is_file_exists(filepath)
-        if not check:
-            download_and_unzip(tool)
+        if (not get_tool_name) or (not get_cmd):
+            send_message_to_websocket('Select a tool and enter command!')
 
-        # Run commands
         try:
-            if get_cmd:
-                command = lang + ' ' + filepath + ' ' + get_cmd
-                output = run_command(command)
+            tool = Tools.objects.get(name=str(get_tool_name))
 
-                send_message_to_websocket(output)
-        except Exception as e:
-            error_message = str(e.args[0]) if e.args else "An unknown error occurred"
-            print(error_message)
+            lang = tool.lang
+            repo_path = 'external-tools/' + tool.folder
+            filepath = repo_path + '/' + tool.filename
 
-            if "ModuleNotFoundError" in error_message:
-                error_message = "ModuleNotFoundError" + '\n'
+            # Check program is installed
+            check = is_file_exists(filepath)
+            if not check:
+                download_and_unzip(tool)
 
-                error_message += "Installing the modules..."
+            # Run commands
+            try:
+                if get_cmd:
+                    command = lang + ' ' + filepath + ' ' + get_cmd
+                    output = run_command(command)
 
-                install_dependencies(repo_path)
+                    send_message_to_websocket(output)
+            except Exception as e:
+                error_message = str(e.args[0]) if e.args else "An unknown error occurred"
+                print(error_message)
 
-    except Tools.DoesNotExist:
-        error_message = "Tool not found"
+                if "ModuleNotFoundError" in error_message:
+                    send_message_to_websocket("ModuleNotFoundError")
+                    send_message_to_websocket("Installing the modules...")
 
-    return render(request, "tools.html", {
-        'command': get_cmd,
-        'output': output,
-        'error_message': error_message,
-    })
+                    install_dependencies(repo_path)
+
+        except Tools.DoesNotExist:
+            error_message = "Tool not found"
+
+        # Ajax response
+        return JsonResponse(data)

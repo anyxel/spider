@@ -6,10 +6,9 @@
 
   <div class="pt-4">
 
-    <form action="" method="get">
-
+    <form id="myForm" action="{% url 'index' %}">
+      {% csrf_token %}
       <div class="input-group mb-3">
-
         <select name="name" class="form-select" style="max-width: 200px">
           <optio>Select a tool</optio>
           <option value="Sublist3r">Sublist3r</option>
@@ -17,7 +16,7 @@
 
         <input type="text" class="form-control" placeholder="Write a command" name="cmd" value="{{ command|default_if_none:"" }}">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="submit">Submit</button>
+          <button class="btn btn-outline-secondary" type="button" onclick="submitForm()">Submit</button>
         </div>
       </div>
     </form>
@@ -49,6 +48,25 @@
 {% endblock %}
 
 {% block scripts %}
+
+  <script>
+    function submitForm() {
+      let form = document.getElementById("myForm");
+
+      fetch(form.action, {
+        {#method: form.method,#}
+        method: 'POST',
+        body: new FormData(form),
+      })
+        .then(response => response.json())
+        .then(data => {
+          // Handle the response data as needed
+          {#console.log(data);#}
+        })
+        .catch(error => console.error('Error:', error));
+    }
+  </script>
+
   <script>
     const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
 
@@ -57,11 +75,11 @@
     };
 
     webSocket.onmessage = function (e) {
-      console.log(e)
-
       const data = JSON.parse(e.data);
       const message = data['message'];
       console.log(message)
+
+      document.getElementById("terminal").innerHTML = '<p>' + message + '</p>';
     };
 
     webSocket.onclose = function (event) {

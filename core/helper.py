@@ -40,18 +40,18 @@ def download_and_unzip(tool):
 
 
 def install_dependencies(repo_path):
-    print('Installing dependencies...')
+    send_message_to_websocket("Installing dependencies...")
 
     try:
         command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
 
         run_command(command)
 
-        print('Successfully installed!')
+        send_message_to_websocket("Successfully installed!")
     except Exception as e:
         error_message = str(e.args[0]) if e.args else "An unknown error occurred"
 
-        print(error_message)
+        send_message_to_websocket(error_message)
 
 
 def send_message_to_websocket(message):
