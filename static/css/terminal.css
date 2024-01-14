@@ -1,0 +1,61 @@
+.terminal-container {
+    margin: auto;
+    max-height: 500px;
+    background: #212121;
+    border: 0.5px solid #ccc;
+    border-radius: 7px;
+}
+
+.terminal-header {
+    width: 100%;
+    height: 25px;
+    border-radius: 5px 5px 0 0;
+}
+
+.buttons {
+    grid-column-gap: 1px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.buttons .button {
+    float: left;
+    margin-left: 7px;
+    width: 12px;
+    height: 12px;
+    border-radius: 100%;
+}
+
+.buttons .button:hover {
+    background: blue;
+}
+
+.terminal-content {
+    width: 100%;
+    height: 100%;
+    font-family: "Source Code Pro", monospace;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+
+.terminal-content p {
+    color: #fff;
+
+    padding: 5px 15px 0 15px;
+}
+
+.terminal-content p.grey {
+    color: #585353;
+}
+
+.red {
+    background: rgba(252, 96, 92, 1);
+}
+
+.yellow {
+    background: rgba(253, 188, 64, 1);
+}
+
+.green {
+    background: rgba(52, 204, 74, 1);
+}

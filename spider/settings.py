@@ -72,6 +72,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'spider.wsgi.application'
 ASGI_APPLICATION = "spider.asgi.application"
 
+STATICFILES_DIRS = [
+    BASE_DIR / 'static'
+]
+
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer',

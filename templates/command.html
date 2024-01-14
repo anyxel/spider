@@ -23,3 +23,25 @@
   </div>
 
 {% endblock %}
+
+{% block scripts %}
+  <script>
+    const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
+
+    webSocket.onopen = function (event) {
+      console.log('WebSocket connection opened:', event);
+    };
+
+    webSocket.onmessage = function (e) {
+      console.log(e)
+
+      const data = JSON.parse(e.data);
+      const message = data['message'];
+      console.log(message)
+    };
+
+    webSocket.onclose = function (event) {
+      console.log('WebSocket connection closed:', event);
+    };
+  </script>
+{% endblock %}

@@ -26,10 +26,46 @@
       <pre>{{ output }}</pre>
     </code>
 
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <div class="buttons">
+          <div class="button red"></div>
+          <div class="button yellow"></div>
+          <div class="button green"></div>
+        </div>
+      </div>
+      <div id="terminal" class="terminal-content">
+        {#        <p class="grey">undefined</p>#}
+        {#        <p class="last"></p>#}
+      </div>
+    </div>
+
     <div class="text-danger">
       {{ error_message|linebreaks }}
     </div>
 
   </div>
 
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
+
+    webSocket.onopen = function (event) {
+      console.log('WebSocket connection opened:', event);
+    };
+
+    webSocket.onmessage = function (e) {
+      console.log(e)
+
+      const data = JSON.parse(e.data);
+      const message = data['message'];
+      console.log(message)
+    };
+
+    webSocket.onclose = function (event) {
+      console.log('WebSocket connection closed:', event);
+    };
+  </script>
 {% endblock %}
