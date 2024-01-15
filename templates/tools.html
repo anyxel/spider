@@ -1,30 +1,27 @@
 {% extends 'bootstrap.html' %}
 
-{% block title %} Run Command {% endblock %}
+{% block title %} Tools {% endblock %}
 
 {% block content %}
 
   <div class="pt-4">
 
-    <form id="myForm" action="{% url 'index' %}">
+    {#  Form  #}
+    <form id="formTerminal" x-data="TerminalForm()" action="{% url 'index' %}" @submit.prevent="submitForm">
       {% csrf_token %}
       <div class="input-group mb-3">
         <select name="name" class="form-select" style="max-width: 200px">
-          <optio>Select a tool</optio>
+          <option value="">Select a tool</option>
           <option value="Sublist3r">Sublist3r</option>
         </select>
-
-        <input type="text" class="form-control" placeholder="Write a command" name="cmd" value="{{ command|default_if_none:"" }}">
+        <input type="text" name="cmd" class="form-control" placeholder="Write a command">
         <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="button" onclick="submitForm()">Submit</button>
+          <button class="btn btn-outline-secondary" type="submit">Submit</button>
         </div>
       </div>
     </form>
 
-    <code>
-      <pre>{{ output }}</pre>
-    </code>
-
+    {#  Terminal  #}
     <div class="terminal-container">
       <div class="terminal-header">
         <div class="buttons">
@@ -33,14 +30,10 @@
           <div class="button green"></div>
         </div>
       </div>
-      <div id="terminal" class="terminal-content">
-        {#        <p class="grey">undefined</p>#}
-        {#        <p class="last"></p>#}
-      </div>
-    </div>
-
-    <div class="text-danger">
-      {{ error_message|linebreaks }}
+      <pre class='code code-html'>
+        <code id="terminal" class="terminal-content">
+        </code>
+      </pre>
     </div>
 
   </div>
@@ -50,30 +43,29 @@
 {% block scripts %}
 
   <script>
-    function submitForm() {
-      let form = document.getElementById("myForm");
-
-      fetch(form.action, {
-        {#method: form.method,#}
-        method: 'POST',
-        body: new FormData(form),
-      })
-        .then(response => response.json())
-        .then(data => {
-          // Handle the response data as needed
-          {#console.log(data);#}
-        })
-        .catch(error => console.error('Error:', error));
+    function TerminalForm() {
+      return {
+        submitForm() {
+          let form = document.getElementById("formTerminal");
+          fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+          })
+            .then(response => response.json())
+            .then(data => {
+              {#console.log(data);#}
+            })
+            .catch(error => console.error('Error:', error));
+        },
+      };
     }
   </script>
 
   <script>
     const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
-
     webSocket.onopen = function (event) {
-      console.log('WebSocket connection opened:', event);
+      {#console.log('WebSocket connection opened:', event);#}
     };
-
     webSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
       const message = data['message'];
@@ -81,9 +73,9 @@
 
       document.getElementById("terminal").innerHTML = '<p>' + message + '</p>';
     };
-
     webSocket.onclose = function (event) {
       console.log('WebSocket connection closed:', event);
     };
   </script>
+  
 {% endblock %}

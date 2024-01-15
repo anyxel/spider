@@ -1,47 +1,78 @@
 {% extends 'bootstrap.html' %}
 
-{% block title %} Run Command {% endblock %}
+{% block title %} Terminal {% endblock %}
 
 {% block content %}
 
   <div class="pt-4">
 
-    <form action="" method="get">
-
+    {#  Form  #}
+    <form id="formTerminal" x-data="TerminalForm()" action="{% url 'terminal' %}" @submit.prevent="submitForm">
+      {% csrf_token %}
       <div class="input-group mb-3">
-        <input type="text" class="form-control" placeholder="Write a command" name="cmd" value="{{ command }}">
+        <input type="text" class="form-control" placeholder="Write a command" name="cmd">
         <div class="input-group-append">
           <button class="btn btn-outline-secondary" type="submit">Submit</button>
         </div>
       </div>
     </form>
 
-    <code>
-      <pre>{{ output }}</pre>
-    </code>
+    {#  Terminal  #}
+    <div class="terminal-container">
+      <div class="terminal-header">
+        <div class="buttons">
+          <div class="button red"></div>
+          <div class="button yellow"></div>
+          <div class="button green"></div>
+        </div>
+      </div>
+      <pre class='code code-html'>
+        <code id="terminal" class="terminal-content">
+        </code>
+      </pre>
+    </div>
 
   </div>
 
 {% endblock %}
 
+
 {% block scripts %}
+
+  <script>
+    function TerminalForm() {
+      return {
+        submitForm() {
+          let form = document.getElementById("formTerminal");
+          fetch(form.action, {
+            method: 'POST',
+            body: new FormData(form),
+          })
+            .then(response => response.json())
+            .then(data => {
+              {#console.log(data);#}
+            })
+            .catch(error => console.error('Error:', error));
+        },
+      };
+    }
+  </script>
+
   <script>
     const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
-
     webSocket.onopen = function (event) {
-      console.log('WebSocket connection opened:', event);
+      {#console.log('WebSocket connection opened:', event);#}
     };
-
     webSocket.onmessage = function (e) {
-      console.log(e)
-
       const data = JSON.parse(e.data);
       const message = data['message'];
       console.log(message)
-    };
 
+      document.getElementById("terminal").innerHTML = '<p>' + message + '</p>';
+    };
     webSocket.onclose = function (event) {
       console.log('WebSocket connection closed:', event);
     };
   </script>
+
 {% endblock %}
