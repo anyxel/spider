@@ -33,6 +33,8 @@
 .terminal-content {
     width: 100%;
     min-height: 400px;
+    max-height: 700px;
+    padding-top: 0 !important;
     font-family: "Source Code Pro", monospace;
     font-size: 0.8rem;
     line-height: 1;

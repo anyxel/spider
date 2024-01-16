@@ -27,8 +27,7 @@
         </div>
       </div>
       <pre class='code code-html'>
-        <code id="terminal" class="terminal-content">
-        </code>
+        <code id="terminal" class="terminal-content"></code>
       </pre>
     </div>
 
@@ -66,9 +65,9 @@
     webSocket.onmessage = function (e) {
       const data = JSON.parse(e.data);
       const message = data['message'];
-      console.log(message)
+      {#console.log(message)#}
 
-      document.getElementById("terminal").innerHTML = '<p>' + message + '</p>';
+      document.getElementById("terminal").innerHTML += message + "<br/>";
     };
     webSocket.onclose = function (event) {
       console.log('WebSocket connection closed:', event);

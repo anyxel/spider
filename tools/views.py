@@ -27,9 +27,6 @@ def index(request):
             'status': 'success'
         }
 
-        send_message_to_websocket(get_cmd)
-        send_message_to_websocket(get_tool_name)
-
         if (not get_tool_name) or (not get_cmd):
             send_message_to_websocket('Select a tool and enter command!')
 
@@ -49,9 +46,8 @@ def index(request):
             try:
                 if get_cmd:
                     command = lang + ' ' + filepath + ' ' + get_cmd
-                    output = run_command(command)
 
-                    send_message_to_websocket(output)
+                    run_command(command)
             except Exception as e:
                 error_message = str(e.args[0]) if e.args else "An unknown error occurred"
                 print(error_message)
