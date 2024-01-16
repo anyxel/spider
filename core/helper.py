@@ -3,16 +3,28 @@ import subprocess
 from urllib.request import urlopen
 from io import BytesIO
 from zipfile import ZipFile
-import json
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-from django.http import HttpResponse
 
 
-def run_command(cmd, input=""):
-    rst = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode("utf-8"))
-    assert rst.returncode == 0, rst.stderr.decode("utf-8")
-    return rst.stdout.decode("utf-8")
+async def run_command(cmd, input=""):
+    try:
+        cmd = cmd + " > tmp.txt"
+
+        rst = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode("utf-8"))
+
+        # rst.returncode == 0, rst.stderr.decode("utf-8")
+        # return rst.stdout.decode("utf-8")
+
+    except Exception as e:
+        error_message = str(e.args[0]) if e.args else "An unknown error occurred"
+        print(e.args[0])
+
+
+# def run_command(cmd, input=""):
+#     rst = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode("utf-8"))
+#     rst.returncode == 0, rst.stderr.decode("utf-8")
+#     # return rst.stdout.decode("utf-8")
 
 
 def is_file_exists(filepath):
@@ -64,3 +76,12 @@ def send_message_to_websocket(message):
             "message": message,
         },
     )
+
+
+async def send_message_to_websocket_aync(message):
+    channel_layer = get_channel_layer()
+
+    await channel_layer.group_send("terminal", {
+        "type": "chat.message",
+        "message": message,
+    })
