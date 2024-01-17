@@ -6,3 +6,4 @@ packaging==23.2
 simplejson==3.19.2
 sqlparse==0.4.4
 tzdata==2023.4
+whitenoise==6.6.0

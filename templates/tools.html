@@ -71,10 +71,20 @@
       {#console.log(message)#}
 
       document.getElementById("terminal").innerHTML += message + "<br/>";
+
+      scrollDown();
     };
     webSocket.onclose = function (event) {
       console.log('WebSocket connection closed:', event);
     };
+
+    // Scroll the div to the bottom
+    function scrollDown() {
+      let scrollingDiv = document.getElementById("terminal");
+      
+      scrollingDiv.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+      scrollingDiv.scrollTop = scrollingDiv.scrollHeight;
+    }
   </script>
 
 {% endblock %}

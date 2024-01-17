@@ -8,6 +8,9 @@ from asgiref.sync import async_to_sync
 
 
 def run_command(cmd, input=""):
+    format_message = "<div class='command'>" + cmd + "</div><hr class='separator'>"
+    send_message_to_websocket(format_message)
+
     process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     while process.poll() is None:
         line = process.stdout.readline().rstrip()

@@ -41,7 +41,8 @@ def terminal(request):
 
                 send_message_to_websocket(e)
         else:
-            send_message_to_websocket('Please write a command!')
+            format_message = "<div class='command-danger'>Please enter a command!</div>"
+            send_message_to_websocket(format_message)
 
         # Ajax response
         return JsonResponse(data)

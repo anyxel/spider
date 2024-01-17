@@ -28,7 +28,8 @@ def index(request):
         }
 
         if (not get_tool_name) or (not get_cmd):
-            send_message_to_websocket('Select a tool and enter command!')
+            format_message = "<div class='command-danger'>Select a tool and enter command!</div>"
+            send_message_to_websocket(format_message)
 
         try:
             tool = Tools.objects.get(name=str(get_tool_name))

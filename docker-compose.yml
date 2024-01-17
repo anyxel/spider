@@ -14,10 +14,3 @@ services:
     command: daphne -b 0.0.0.0 -p 8000 spider.asgi:application
     ports:
       - "8001:8000"
-    networks:
-      - anyxel
-
-# networks
-networks:
-  anyxel:
-    driver: bridge
