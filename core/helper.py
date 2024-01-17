@@ -27,20 +27,23 @@ def is_file_exists(filepath):
 
 
 def download_and_unzip(tool):
-    print('Downloading ' + str(tool.name) + '...')
+    send_message_to_websocket('Downloading ' + str(tool.name) + '...')
 
-    http_response = urlopen(tool.url)
+    url = tool.url + '/archive/' + tool.branch + '.zip'
+    send_message_to_websocket(url)
+
+    http_response = urlopen(url)
     zipfile = ZipFile(BytesIO(http_response.read()))
 
-    print('Extracting...')
+    send_message_to_websocket('Extracting...')
     extract_to = 'external-tools'
     zipfile.extractall(path=extract_to)
 
     if tool.has_dependencies:
-        repo_path = extract_to + '/' + tool.folder
+        repo_path = extract_to + '/' + tool.folder + '-' + tool.branch
         install_dependencies(repo_path)
     else:
-        print('Successfully installed!')
+        send_message_to_websocket('Successfully installed!')
 
 
 def install_dependencies(repo_path):

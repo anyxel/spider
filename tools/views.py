@@ -36,7 +36,7 @@ def index(request):
 
             lang = tool.lang
             repo_path = 'external-tools/' + tool.folder
-            filepath = repo_path + '/' + tool.filename
+            filepath = repo_path + '-' + tool.branch + '/' + tool.filename
 
             # Check program is installed
             check = is_file_exists(filepath)
