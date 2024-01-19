@@ -24,5 +24,18 @@
       "filename": "waymore.py",
       "has_dependencies": "True"
     }
+  },
+  {
+    "model": "tools.tools",
+    "pk": 3,
+    "fields": {
+      "name": "KnockMail",
+      "lang": "python",
+      "url": "https://github.com/4w4k3/KnockMail",
+      "branch": "master",
+      "folder": "KnockMail-master",
+      "filename": "knock.py",
+      "has_dependencies": "True"
+    }
   }
 ]
