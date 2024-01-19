@@ -20,7 +20,7 @@
       "lang": "python",
       "url": "https://github.com/xnl-h4ck3r/waymore",
       "branch": "main",
-      "folder": "waymore-master",
+      "folder": "waymore",
       "filename": "waymore.py",
       "has_dependencies": "True"
     }
@@ -33,7 +33,7 @@
       "lang": "python",
       "url": "https://github.com/4w4k3/KnockMail",
       "branch": "master",
-      "folder": "KnockMail-master",
+      "folder": "KnockMail",
       "filename": "knock.py",
       "has_dependencies": "True"
     }
