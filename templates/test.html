@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/xterm@5.3.0/css/xterm.css"/>
+  <script src="https://unpkg.com/xterm@5.3.0/lib/xterm.js"></script>
+</head>
+
+<body>
+
+<div id="terminal"></div>
+
+<script>
+  const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
+  {#Terminal.applyAddon(fit)#}
+
+  var command = '';
+  var curr_line = '';
+
+  var terminalContainer = document.getElementById('terminal');
+
+  var term = new Terminal({
+    cursorBlink: true,
+    rendererType: 'canvas',
+    screenReaderMode: true,
+  });
+
+  term.open(terminalContainer);
+
+  term.prompt = function () {
+    term.write('\r\n$ ');
+  };
+
+  term.writeln('Welcome to xterm.js');
+  term.writeln('This is a local terminal emulation, without a real terminal in the back-end.');
+  term.writeln('Type some keys and commands to play around.');
+  term.writeln('');
+  term.prompt();
+
+  term.onData(e => {
+    switch (e) {
+      case '\u0003': // Ctrl+C
+        term.write('^C');
+        prompt(term);
+        break;
+      case '\r': // Enter
+        runCommand(term, command);
+        command = '';
+        break;
+      case '\u007F': // Backspace (DEL)
+        // Do not delete the prompt
+        if (term._core.buffer.x > 2) {
+          term.write('\b \b');
+          if (command.length > 0) {
+            command = command.substr(0, command.length - 1);
+          }
+        }
+        break;
+      default: // Print all other characters for demo
+        if (e >= String.fromCharCode(0x20) && e <= String.fromCharCode(0x7E) || e >= '\u00a0') {
+          command += e;
+          {#term.write(e);#}
+        }
+    }
+  });
+
+
+  term.onKey((e) => {
+    const ev = e.domEvent;
+    const printable = !ev.altKey && !ev.ctrlKey && !ev.metaKey;
+
+    if (ev.keyCode === 13) {
+
+      if (curr_line.replace(/^\s+|\s+$/g, '').length != 0) { // Check if string is all whitespace
+        entries.push(curr_line);
+        currPos = entries.length - 1;
+        term.prompt();
+      } else {
+        term.write('\n\33[2K\r\u001b[32mscm> \u001b[37m');
+      }
+      curr_line = '';
+
+
+      term.prompt();
+    } else if (ev.keyCode === 8) {
+      // Do not delete the prompt
+      if (term._core.buffer.x > 2) {
+        term.write('\b \b');
+      }
+    } else if (printable) {
+      term.write(e.key);
+    }
+  });
+
+  function runCommand(term, text) {
+    const command = text.trim().split(' ')[0];
+
+    const formData = new FormData();
+    formData.append("csrfmiddlewaretoken", '{{ csrf_token }}');
+    formData.append("cmd", command);
+
+    fetch('/terminal', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}'
+      },
+      mode: 'same-origin',
+      body: formData
+    })
+      .then(response => response.json())
+      .then(data => {
+        {#console.log(data);#}
+      })
+      .catch(error => console.error('Error:', error));
+
+    {#console.log(command)#}
+
+    {#prompt(term);#}
+  }
+
+
+  webSocket.onopen = function (event) {
+    {#console.log('WebSocket connection opened:', event);#}
+  };
+  webSocket.onmessage = function (e) {
+    const data = JSON.parse(e.data);
+    const message = data['message'];
+    {#console.log(message)#}
+
+    term.write(message);
+    term.writeln('');
+
+    {#document.getElementById("terminal").innerHTML += message + "<br/>";#}
+
+    {#scrollDown();#}
+  };
+  webSocket.onclose = function (event) {
+    console.log('WebSocket connection closed:', event);
+  };
+
+  // Scroll the div to the bottom
+  function scrollDown() {
+    let scrollingDiv = document.getElementById("terminal");
+
+    scrollingDiv.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
+    scrollingDiv.scrollTop = scrollingDiv.scrollHeight;
+  }
+
+</script>
+</body>
+</html>

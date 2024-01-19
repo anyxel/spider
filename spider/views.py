@@ -16,6 +16,10 @@ def setup(request):
     })
 
 
+def terminal2(request):
+    return render(request, "test.html", )
+
+
 def terminal(request):
     # Index
     if request.method == 'GET':
