@@ -1,6 +1,13 @@
 {% extends 'bootstrap.html' %}
+{% load static %}
 
 {% block title %} Tools {% endblock %}
+
+
+{% block head %}
+  <link href="{% static 'css/terminal.css' %}" rel="stylesheet">
+  <link href="{% static 'css/code-highlight.css' %}" rel="stylesheet">
+{% endblock %}
 
 {% block content %}
 

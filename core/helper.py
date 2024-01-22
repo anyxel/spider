@@ -1,4 +1,6 @@
+import asyncio
 import os
+import pty
 import subprocess
 from urllib.request import urlopen
 from io import BytesIO
@@ -7,16 +9,75 @@ from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
 
-def run_command(cmd, input=""):
-    format_message = "<div class='command'>" + cmd + "</div><hr class='separator'>"
-    send_message_to_websocket(format_message)
+def run_command(command):
+    # format_message = "<div class='command'>" + command + "</div><hr class='separator'>"
+    # send_message_to_websocket(format_message)
 
-    process = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-    while process.poll() is None:
-        line = process.stdout.readline().rstrip()
-        if line:
-            string_data = line.decode('utf-8')
-            send_message_to_websocket(string_data)
+    # Start a subprocess with a pseudo-terminal
+    master, slave = pty.openpty()
+    process = subprocess.Popen(command, stdin=slave, stdout=slave, stderr=slave, close_fds=True, shell=True)
+
+    # Close the slave PTY file descriptor as it is not needed in the parent process
+    os.close(slave)
+
+    # Write input to the master PTY file descriptor
+    input_data = 'whoami'
+    # os.write(master, input_data.encode('utf-8'))
+
+    # Communicate with the subprocess using the master PTY file descriptor
+    while True:
+        try:
+            output = os.read(master, 1024)
+            if not output:
+                break
+            # Do something with the output, for example, print it
+            # print(output.decode('utf-8'), end='')
+            send_message_to_websocket(output.decode('utf-8'))
+        except OSError:
+            break
+
+    # Wait for the subprocess to finish
+    process.wait()
+
+    # Close the master PTY file descriptor
+    os.close(master)
+
+
+async def run_command_async(command):
+    # Start a subprocess with a pseudo-terminal
+    master, slave = pty.openpty()
+    process = await asyncio.create_subprocess_shell(
+        command,
+        stdin=slave,
+        stdout=slave,
+        stderr=slave,
+        close_fds=True
+    )
+
+    # Close the slave PTY file descriptor as it is not needed in the parent process
+    os.close(slave)
+
+    # Write input to the master PTY file descriptor
+    input_data = 'whoami'
+    # os.write(master, input_data.encode('utf-8'))
+
+    # Communicate with the subprocess using the master PTY file descriptor
+    while True:
+        try:
+            output = os.read(master, 1024)
+            if not output:
+                break
+            # Do something with the output, for example, print it
+            # print(output.decode('utf-8'), end='')
+            await send_message_to_websocket_async(output.decode('utf-8'))
+        except OSError:
+            break
+
+    # Wait for the subprocess to finish
+    await process.wait()
+
+    # Close the master PTY file descriptor
+    os.close(master)
 
 
 def is_file_exists(filepath):

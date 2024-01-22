@@ -24,7 +24,7 @@ urlpatterns = [
     path('setup', views.setup, name='setup'),
 
     path('terminal', views.terminal, name='terminal'),
-    path('terminal2', views.terminal2, name='terminal2'),
+    path('run-command', views.runCommand, name='command.run'),
 
     path('admin/', admin.site.urls),
 

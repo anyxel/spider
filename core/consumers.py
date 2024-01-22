@@ -1,6 +1,8 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
+from core.helper import run_command_async
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -25,9 +27,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         message = data['message']
 
         # Perform some action with the received message
-        await self.send(text_data=json.dumps({
-            'message': f"You said: {message}"
-        }))
+        # await self.send(text_data=json.dumps({
+        #     'message': f"You said: {message}"
+        # }))
+
+        await run_command_async(message)
 
     async def chat_message(self, event):
         # print('event')
