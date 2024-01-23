@@ -10,9 +10,6 @@ from asgiref.sync import async_to_sync
 
 
 def run_command(command):
-    # format_message = "<div class='command'>" + command + "</div><hr class='separator'>"
-    # send_message_to_websocket(format_message)
-
     # Start a subprocess with a pseudo-terminal
     master, slave = pty.openpty()
     process = subprocess.Popen(command, stdin=slave, stdout=slave, stderr=slave, close_fds=True, shell=True)
@@ -32,7 +29,10 @@ def run_command(command):
                 break
             # Do something with the output, for example, print it
             # print(output.decode('utf-8'), end='')
-            send_message_to_websocket(output.decode('utf-8'))
+
+            message = output.decode('utf-8')
+
+            send_message_to_websocket(message)
         except OSError:
             break
 

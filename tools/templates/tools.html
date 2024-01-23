@@ -4,8 +4,10 @@
 {% block title %} Tools {% endblock %}
 
 {% block head %}
-  <link href="{% static 'css/terminal.css' %}" rel="stylesheet">
-  <link href="{% static 'css/code-highlight.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/xterm@5.3.0/css/xterm.css"/>
+  <script src="https://unpkg.com/xterm@5.3.0/lib/xterm.js"></script>
+
+  <link href="{% static 'css/xterm-spider.css' %}" rel="stylesheet">
 {% endblock %}
 
 {% block content %}
@@ -36,15 +38,16 @@
         <div class="button green"></div>
       </div>
     </div>
-    <pre class='code code-html'>
-        <code id="terminal" class="terminal-content"></code>
-      </pre>
+    <div class="inner">
+      <div id="terminal"></div>
+    </div>
   </div>
 
 {% endblock %}
 
 {% block scripts %}
 
+  {% include "component/xtermjs.html" %}
   <script>
     function TerminalForm() {
       return {
@@ -61,33 +64,6 @@
             .catch(error => console.error('Error:', error));
         },
       };
-    }
-  </script>
-
-  <script>
-    const webSocket = new WebSocket(`ws://${window.location.host}/ws/chat/`);
-    webSocket.onopen = function (event) {
-      {#console.log('WebSocket connection opened:', event);#}
-    };
-    webSocket.onmessage = function (e) {
-      const data = JSON.parse(e.data);
-      const message = data['message'];
-      {#console.log(message)#}
-
-      document.getElementById("terminal").innerHTML += message + "<br/>";
-
-      scrollDown();
-    };
-    webSocket.onclose = function (event) {
-      console.log('WebSocket connection closed:', event);
-    };
-
-    // Scroll the div to the bottom
-    function scrollDown() {
-      let scrollingDiv = document.getElementById("terminal");
-
-      scrollingDiv.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
-      scrollingDiv.scrollTop = scrollingDiv.scrollHeight;
     }
   </script>
 

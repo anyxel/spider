@@ -24,14 +24,11 @@ def index(request):
 
     # POST method
     if request.method == 'POST':
-        data = {
-            'message': 'Hello, this is a JSON response!',
-            'status': 'success'
-        }
+        message = 'Success'
 
         if (not get_tool_name) or (not get_cmd):
-            format_message = "<div class='command-danger'>Select a tool and enter command!</div>"
-            send_message_to_websocket(format_message)
+            message = "Select a tool and enter command!"
+            send_message_to_websocket(message)
 
         try:
             tool = Tools.objects.get(name=str(get_tool_name))
@@ -52,8 +49,7 @@ def index(request):
 
                     run_command(command)
             except Exception as e:
-                error_message = str(e.args[0]) if e.args else "An unknown error occurred"
-                print(error_message)
+                message = str(e.args[0]) if e.args else "An unknown error occurred"
 
                 if "ModuleNotFoundError" in error_message:
                     send_message_to_websocket("ModuleNotFoundError")
@@ -62,7 +58,10 @@ def index(request):
                     install_dependencies(repo_path)
 
         except Tools.DoesNotExist:
-            error_message = "Tool not found"
+            message = "Tool not found"
 
         # Ajax response
+        data = {
+            'message': message,
+        }
         return JsonResponse(data)

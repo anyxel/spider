@@ -1,0 +1,33 @@
+{% load static %}
+
+<script src="{% static 'js/xterm.js' %}"></script>
+<script>
+  function runCommand(term, text) {
+    const command = text;
+    console.log(command)
+
+    if (command) {
+      let formData = new FormData();
+      formData.append('command', command);
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+      // Via Ajax
+      fetch('{% url 'command.run' %}', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+        })
+        .catch(error => console.error('Error:', error));
+
+      // Via websocket
+      const message = {
+        "type": "chat.message",
+        'message': command
+      }
+      // webSocket.send(JSON.stringify(message));
+    }
+  }
+</script>
