@@ -1,4 +1,4 @@
-{% extends 'bootstrap.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %} Terminal {% endblock %}
@@ -14,22 +14,16 @@
 
 {% block content %}
 
-  <div class="container">
-    <div class="pt-5">
-
-      <div class="terminal-container">
-        <div class="terminal-header">
-          <div class="buttons">
-            <div class="button red"></div>
-            <div class="button yellow"></div>
-            <div class="button green"></div>
-          </div>
-        </div>
-        <div class="inner">
-          <div id="terminal"></div>
-        </div>
+  <div class="terminal-container">
+    <div class="terminal-header">
+      <div class="buttons">
+        <div class="button red"></div>
+        <div class="button yellow"></div>
+        <div class="button green"></div>
       </div>
-
+    </div>
+    <div class="inner">
+      <div id="terminal"></div>
     </div>
   </div>
 
@@ -55,7 +49,7 @@
     const SHELL_PROMPT = TermColors.Purple + "spider@anyxel:~$ " + TermColors.Reset;
 
     const term = new Terminal({
-      rows: 40,
+      rows: 30,
       cursorBlink: true,
       rendererType: 'canvas',
       screenReaderMode: true,

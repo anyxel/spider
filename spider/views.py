@@ -4,7 +4,7 @@ from django.shortcuts import render
 from core.helper import run_command, send_message_to_websocket
 
 
-def index(request):
+def home(request):
     return render(request, "home.html", {})
 
 

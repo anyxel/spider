@@ -1,8 +1,7 @@
-{% extends 'bootstrap.html' %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block title %} Tools {% endblock %}
-
 
 {% block head %}
   <link href="{% static 'css/terminal.css' %}" rel="stylesheet">
@@ -11,39 +10,35 @@
 
 {% block content %}
 
-  <div class="pt-4">
-
-    {#  Form  #}
-    <form id="formTerminal" x-data="TerminalForm()" action="{% url 'index' %}" @submit.prevent="submitForm">
-      {% csrf_token %}
-      <div class="input-group mb-3">
-        <select name="name" class="form-select" style="max-width: 200px">
-          <option value="">Select a tool</option>
-          <option value="Sublist3r">Sublist3r</option>
-          <option value="waymore">waymore</option>
-          <option value="XSStrike">XSStrike</option>
-        </select>
-        <input type="text" name="cmd" class="form-control" placeholder="Write a command">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary" type="submit">Submit</button>
-        </div>
+  {#  Form  #}
+  <form id="formTerminal" x-data="TerminalForm()" action="{% url 'tools.index' %}" @submit.prevent="submitForm">
+    {% csrf_token %}
+    <div class="input-group mb-3">
+      <select name="name" class="form-select" style="max-width: 200px">
+        <option value="">Select a tool</option>
+        <option value="Sublist3r">Sublist3r</option>
+        <option value="waymore">waymore</option>
+        <option value="XSStrike">XSStrike</option>
+      </select>
+      <input type="text" name="cmd" class="form-control" placeholder="Write a command">
+      <div class="input-group-append">
+        <button class="btn btn-outline-secondary" type="submit">Submit</button>
       </div>
-    </form>
+    </div>
+  </form>
 
-    {#  Terminal  #}
-    <div class="terminal-container">
-      <div class="terminal-header">
-        <div class="buttons">
-          <div class="button red"></div>
-          <div class="button yellow"></div>
-          <div class="button green"></div>
-        </div>
+  {#  Terminal  #}
+  <div class="terminal-container">
+    <div class="terminal-header">
+      <div class="buttons">
+        <div class="button red"></div>
+        <div class="button yellow"></div>
+        <div class="button green"></div>
       </div>
-      <pre class='code code-html'>
+    </div>
+    <pre class='code code-html'>
         <code id="terminal" class="terminal-content"></code>
       </pre>
-    </div>
-
   </div>
 
 {% endblock %}
@@ -91,7 +86,7 @@
     function scrollDown() {
       let scrollingDiv = document.getElementById("terminal");
 
-      scrollingDiv.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" });
+      scrollingDiv.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
       scrollingDiv.scrollTop = scrollingDiv.scrollHeight;
     }
   </script>
