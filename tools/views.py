@@ -1,3 +1,5 @@
+import os
+
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -35,7 +37,7 @@ def index(request):
             tool = Tools.objects.get(name=str(get_tool_name))
 
             lang = tool.lang
-            repo_path = 'external-tools/' + tool.folder
+            repo_path = os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
             filepath = repo_path + '-' + tool.branch + '/' + tool.filename
 
             # Check program is installed

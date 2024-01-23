@@ -8,9 +8,13 @@ services:
       dockerfile: Dockerfile
     image: spider
     container_name: spider
-    restart: always
+    environment:
+      - APP_NAME=${APP_NAME}
+      - SECRET_KEY=${SECRET_KEY}
+      - EXTERNAL_TOOLS_DIR=${EXTERNAL_TOOLS_DIR}
     volumes:
       - ./:/app
     command: daphne -b 0.0.0.0 -p 8000 spider.asgi:application
     ports:
       - "8001:8000"
+    restart: always

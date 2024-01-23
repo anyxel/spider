@@ -97,7 +97,7 @@ def download_and_unzip(tool):
     zipfile = ZipFile(BytesIO(http_response.read()))
 
     send_message_to_websocket('Extracting...')
-    extract_to = 'external-tools'
+    extract_to = os.getenv('EXTERNAL_TOOLS_DIR')
     zipfile.extractall(path=extract_to)
 
     if tool.has_dependencies:

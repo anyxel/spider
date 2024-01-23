@@ -1,3 +1,5 @@
+import os
+
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -5,7 +7,10 @@ from core.helper import run_command, send_message_to_websocket
 
 
 def home(request):
-    return render(request, "home.html", {})
+    app_name = os.getenv("APP_NAME")
+    return render(request, "home.html", {
+        "app_name": app_name
+    })
 
 
 def setup(request):
