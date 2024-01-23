@@ -4,9 +4,7 @@
 {% block title %} Tools {% endblock %}
 
 {% block head %}
-  <link rel="stylesheet" href="https://unpkg.com/xterm@5.3.0/css/xterm.css"/>
-  <script src="https://unpkg.com/xterm@5.3.0/lib/xterm.js"></script>
-
+  <link href="{% static 'css/../../static/vendor/xtermjs/xterm.css' %}" rel="stylesheet">
   <link href="{% static 'css/xterm-spider.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -16,13 +14,13 @@
   <form id="formTerminal" x-data="TerminalForm()" action="{% url 'tools.index' %}" @submit.prevent="submitForm">
     {% csrf_token %}
     <div class="input-group mb-3">
-      <select name="name" class="form-select" style="max-width: 200px">
+      <select name="name" class="form-select" style="max-width: 200px" required>
         <option value="">Select a tool</option>
-        <option value="Sublist3r">Sublist3r</option>
-        <option value="waymore">waymore</option>
-        <option value="XSStrike">XSStrike</option>
+        {% for tool in tools %}
+          <option value="{{ tool.name }}">{{ tool.name }}</option>
+        {% endfor %}
       </select>
-      <input type="text" name="cmd" class="form-control" placeholder="Write a command">
+      <input type="text" name="cmd" class="form-control" placeholder="Write a command" required>
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="submit">Submit</button>
       </div>
@@ -46,7 +44,6 @@
 {% endblock %}
 
 {% block scripts %}
-
   {% include "component/xtermjs.html" %}
   <script>
     function TerminalForm() {

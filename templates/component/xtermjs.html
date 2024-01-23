@@ -1,6 +1,7 @@
 {% load static %}
 
-<script src="{% static 'js/xterm.js' %}"></script>
+<script src="{% static 'vendor/xtermjs/xterm-5.3.0.js' %}"></script>
+<script src="{% static 'js/xterm-spider.js' %}"></script>
 <script>
   function runCommand(term, text) {
     const command = text;
@@ -18,7 +19,7 @@
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+          {#console.log(data);#}
         })
         .catch(error => console.error('Error:', error));
 

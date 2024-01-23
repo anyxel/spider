@@ -88,38 +88,42 @@ def is_file_exists(filepath):
 
 
 def download_and_unzip(tool):
-    send_message_to_websocket('Downloading ' + str(tool.name) + '...')
+    send_message_to_websocket('Downloading ' + str(tool.name) + '...\r\n')
 
-    url = tool.url + '/archive/' + tool.branch + '.zip'
+    url = tool.url + '/archive/' + tool.branch + '.zip\r\n'
     send_message_to_websocket(url)
 
     http_response = urlopen(url)
     zipfile = ZipFile(BytesIO(http_response.read()))
 
-    send_message_to_websocket('Extracting...')
+    send_message_to_websocket('Extracting...\r\n')
     extract_to = os.getenv('EXTERNAL_TOOLS_DIR')
     zipfile.extractall(path=extract_to)
 
+    # Remove directory
+    extracted_path = extract_to + '/' + tool.folder + '-' + tool.branch
+    new_path = extract_to + '/' + tool.folder
+    os.rename(extracted_path, new_path)
+
     if tool.has_dependencies:
-        repo_path = extract_to + '/' + tool.folder + '-' + tool.branch
-        install_dependencies(repo_path)
+        install_dependencies(new_path)
     else:
-        send_message_to_websocket('Successfully installed!')
+        send_message_to_websocket('Successfully installed!\r\n')
 
 
 def install_dependencies(repo_path):
-    send_message_to_websocket("Installing dependencies...")
+    send_message_to_websocket("Installing dependencies...\r\n")
 
     try:
         command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
 
         run_command(command)
 
-        send_message_to_websocket("Successfully installed!")
+        send_message_to_websocket("Successfully installed!\r\n")
     except Exception as e:
         error_message = str(e.args[0]) if e.args else "An unknown error occurred"
 
-        send_message_to_websocket(error_message)
+        send_message_to_websocket(error_message + '\r\n')
 
 
 def send_message_to_websocket(message):
