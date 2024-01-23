@@ -29,12 +29,12 @@
     "model": "tools.tools",
     "pk": 3,
     "fields": {
-      "name": "KnockMail",
+      "name": "XSStrike",
       "lang": "python",
-      "url": "https://github.com/4w4k3/KnockMail",
+      "url": "https://github.com/s0md3v/XSStrike",
       "branch": "master",
-      "folder": "KnockMail",
-      "filename": "knock.py",
+      "folder": "XSStrike",
+      "filename": "xsstrike.py",
       "has_dependencies": "True"
     }
   }
