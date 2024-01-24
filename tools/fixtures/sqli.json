@@ -1,0 +1,28 @@
+[
+  {
+    "model": "tools.tools",
+    "pk": 20,
+    "fields": {
+      "name": "sqlmap",
+      "lang": "python",
+      "url": "https://github.com/sqlmapproject/sqlmap",
+      "branch": "master",
+      "folder": "sqlmap",
+      "filename": "sqlmap.py",
+      "has_dependencies": "False"
+    }
+  },
+  {
+    "model": "tools.tools",
+    "pk": 21,
+    "fields": {
+      "name": "Damn Small SQLi Scanner",
+      "lang": "python",
+      "url": "https://github.com/stamparm/DSSS",
+      "branch": "master",
+      "folder": "DSSS",
+      "filename": "dsss.py",
+      "has_dependencies": "False"
+    }
+  }
+]

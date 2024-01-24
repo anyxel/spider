@@ -106,10 +106,12 @@ def download_and_unzip(tool):
     new_path = extract_to + '/' + tool.folder
     os.rename(extracted_path, new_path)
 
+    # Install dependencies
     if tool.has_dependencies:
         install_dependencies(new_path)
-    else:
-        send_message_to_websocket('Successfully installed!\r\n')
+
+    # Final message
+    send_message_to_websocket('Successfully installed!\r\n')
 
 
 def install_dependencies(repo_path):
@@ -118,8 +120,6 @@ def install_dependencies(repo_path):
     try:
         command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
         run_command(command)
-
-        send_message_to_websocket("Successfully installed!\r\n")
     except Exception as e:
         error_message = str(e.args[0]) if e.args else "An unknown error occurred"
 
