@@ -1,6 +1,7 @@
 import asyncio
 import os
 import pty
+import shutil
 import subprocess
 from urllib.request import urlopen
 from io import BytesIO
@@ -116,7 +117,6 @@ def install_dependencies(repo_path):
 
     try:
         command = 'cd ' + repo_path + ' && pip install -r requirements.txt'
-
         run_command(command)
 
         send_message_to_websocket("Successfully installed!\r\n")
@@ -124,6 +124,18 @@ def install_dependencies(repo_path):
         error_message = str(e.args[0]) if e.args else "An unknown error occurred"
 
         send_message_to_websocket(error_message + '\r\n')
+
+
+def re_install(tool):
+    tool_path = os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
+    if os.path.exists(tool_path):
+        try:
+            shutil.rmtree(tool_path)
+            send_message_to_websocket('Deleted old files...\r\n')
+        except Exception as e:
+            send_message_to_websocket(f"Error deleting folder '{tool_path}': {e}\r\n")
+
+    download_and_unzip(tool)
 
 
 def send_message_to_websocket(message):

@@ -3,7 +3,8 @@ import os
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from core.helper import run_command, send_message_to_websocket
+from core.helper import run_command, send_message_to_websocket, re_install
+from tools.models import Tools
 
 
 def home(request):
@@ -28,6 +29,7 @@ def terminal(request):
 def runCommand(request):
     message = 'Success'
     command = request.POST.get('command')
+    tool_name = request.POST.get('tool')
 
     if not command:
         message = "Please enter a command!"
@@ -35,7 +37,14 @@ def runCommand(request):
     # Run
     try:
         if command:
-            run_command(command)
+            if command == 'reinstall':
+                tool = Tools.objects.get(name=str(tool_name))
+
+                send_message_to_websocket('Re-Installing ' + str(tool.name) + '...\r\n')
+
+                re_install(tool)
+            else:
+                run_command(command)
     except Exception as e:
         message = str(e.args[0]) if e.args else "An unknown error occurred"
         run_command(message)

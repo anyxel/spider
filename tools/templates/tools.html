@@ -14,7 +14,7 @@
   <form id="formTerminal" x-data="TerminalForm()" action="{% url 'tools.index' %}" @submit.prevent="submitForm">
     {% csrf_token %}
     <div class="input-group mb-3">
-      <select name="name" class="form-select" style="max-width: 200px" required>
+      <select id="tool" name="name" class="form-select" style="max-width: 200px" required>
         <option value="">Select a tool</option>
         {% for tool in tools %}
           <option value="{{ tool.name }}">{{ tool.name }}</option>
@@ -23,6 +23,7 @@
       <input type="text" name="cmd" class="form-control" placeholder="Write a command" required>
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="submit">Submit</button>
+        <button class="btn btn-outline-secondary" type="button" x-on:click="reInstall()">Reinstall</button>
       </div>
     </div>
   </form>
@@ -61,6 +62,30 @@
             .catch(error => console.error('Error:', error));
         },
       };
+    }
+
+    function reInstall() {
+      let tool = document.getElementById("tool").value;
+      if (tool) {
+        let formData = new FormData();
+        formData.append('command', 'reinstall');
+        formData.append('tool', tool);
+        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+        // Via Ajax
+        fetch('{% url 'command.run' %}', {
+          method: 'POST',
+          body: formData,
+        })
+          .then(response => response.json())
+          .then(data => {
+            {#console.log(data);#}
+          })
+          .catch(error => console.error('Error:', error));
+      } else {
+        term.write('Please select a tool!');
+        term.writeln('');
+      }
     }
   </script>
 
