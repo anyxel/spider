@@ -27,7 +27,8 @@ RUN dnf install python3-pip -y \
 # Install sqlite
 RUN dnf install sqlite -y && sqlite3 db.sqlite3 ""
 
-RUN pip install daphne
+RUN pip install daphne \
+    && pip install tornado
 
 # Workdir
 ENV APP_HOME=/app

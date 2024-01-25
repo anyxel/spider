@@ -17,4 +17,5 @@ services:
     command: daphne -b 0.0.0.0 -p 8000 spider.asgi:application
     ports:
       - "8001:8000"
+      - "8282:8282"
     restart: always

@@ -37,5 +37,18 @@
       "filename": "xsstrike.py",
       "has_dependencies": "True"
     }
+  },
+  {
+    "model": "tools.tools",
+    "pk": 4,
+    "fields": {
+      "name": "ReconDog",
+      "lang": "python",
+      "url": "https://github.com/s0md3v/ReconDog",
+      "branch": "master",
+      "folder": "ReconDog",
+      "filename": "dog",
+      "has_dependencies": "True"
+    }
   }
 ]

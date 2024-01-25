@@ -30,21 +30,23 @@ def runCommand(request):
     message = 'Success'
     command = request.POST.get('command')
     tool_name = request.POST.get('tool')
+    type = request.POST.get('type')
 
     if not command:
         message = "Please enter a command!"
 
     # Run
     try:
-        if command:
-            if command == 'reinstall':
-                tool = Tools.objects.get(name=str(tool_name))
+        if type == 'reinstall':
+            tool = Tools.objects.get(name=str(tool_name))
 
-                send_message_to_websocket('Re-Installing ' + str(tool.name) + '...\r\n')
+            send_message_to_websocket('Re-Installing ' + str(tool.name) + '...\r\n')
 
-                re_install(tool)
-            else:
-                run_command(command)
+            re_install(tool)
+        elif type == 'input':
+            take_input(command)
+        else:
+            run_command(command)
     except Exception as e:
         message = str(e.args[0]) if e.args else "An unknown error occurred"
         run_command(message)

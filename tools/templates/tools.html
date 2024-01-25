@@ -68,7 +68,7 @@
       let tool = document.getElementById("tool").value;
       if (tool) {
         let formData = new FormData();
-        formData.append('command', 'reinstall');
+        formData.append('type', 'reinstall');
         formData.append('tool', tool);
         formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
