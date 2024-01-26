@@ -1,7 +1,7 @@
 FROM almalinux:latest
-
 LABEL maintainer="anyxel@proton.me"
 
+# Update
 RUN dnf update -y && dnf upgrade -y
 
 # Install necessay tools

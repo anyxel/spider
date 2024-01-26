@@ -1,12 +1,11 @@
 version: '3.9'
 
 services:
-
   spider:
     build:
       context: .
-      dockerfile: Dockerfile
-    image: spider
+      dockerfile: .docker/ubuntu.Dockerfile
+    image: anyxel/spider:latest
     container_name: spider
     environment:
       - APP_NAME=${APP_NAME}
@@ -14,7 +13,6 @@ services:
       - EXTERNAL_TOOLS_DIR=${EXTERNAL_TOOLS_DIR}
     volumes:
       - ./:/app
-    command: daphne -b 0.0.0.0 -p 8000 spider.asgi:application
     ports:
       - "8001:8000"
       - "8282:8282"
