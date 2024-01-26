@@ -5,11 +5,10 @@
     "fields": {
       "name": "Sublist3r",
       "lang": "python",
-      "url": "https://github.com/aboul3la/Sublist3r",
-      "branch": "master",
       "folder": "Sublist3r",
-      "filename": "sublist3r.py",
-      "has_dependencies": "True"
+      "run": "sublist3r.py",
+      "script": "sublist3r.sh",
+      "url": "https://github.com/aboul3la/Sublist3r"
     }
   },
   {
@@ -18,11 +17,10 @@
     "fields": {
       "name": "waymore",
       "lang": "python",
-      "url": "https://github.com/xnl-h4ck3r/waymore",
-      "branch": "main",
       "folder": "waymore",
-      "filename": "waymore.py",
-      "has_dependencies": "True"
+      "run": "waymore.py",
+      "script": "",
+      "url": "https://github.com/xnl-h4ck3r/waymore"
     }
   },
   {
@@ -31,11 +29,10 @@
     "fields": {
       "name": "XSStrike",
       "lang": "python",
-      "url": "https://github.com/s0md3v/XSStrike",
-      "branch": "master",
       "folder": "XSStrike",
-      "filename": "xsstrike.py",
-      "has_dependencies": "True"
+      "run": "xsstrike.py",
+      "script": "",
+      "url": "https://github.com/s0md3v/XSStrike"
     }
   },
   {
@@ -44,11 +41,10 @@
     "fields": {
       "name": "ReconDog",
       "lang": "python",
-      "url": "https://github.com/s0md3v/ReconDog",
-      "branch": "master",
       "folder": "ReconDog",
-      "filename": "dog",
-      "has_dependencies": "True"
+      "run": "dog",
+      "script": "",
+      "url": "https://github.com/s0md3v/ReconDog"
     }
   }
 ]

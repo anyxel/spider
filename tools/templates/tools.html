@@ -4,7 +4,7 @@
 {% block title %} Tools {% endblock %}
 
 {% block head %}
-  <link href="{% static 'css/../../static/vendor/xtermjs/xterm.css' %}" rel="stylesheet">
+  <link href="{% static 'vendor/xtermjs/xterm.css' %}" rel="stylesheet">
   <link href="{% static 'css/xterm-spider.css' %}" rel="stylesheet">
 {% endblock %}
 
@@ -20,10 +20,11 @@
           <option value="{{ tool.name }}">{{ tool.name }}</option>
         {% endfor %}
       </select>
-      <input type="text" name="cmd" class="form-control" placeholder="Write a command" required>
+      <input id="command" type="text" name="cmd" class="form-control" placeholder="Write a command" required>
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="submit">Submit</button>
-        <button class="btn btn-outline-secondary" type="button" x-on:click="reInstall()">Reinstall</button>
+        <button class="btn btn-outline-secondary" type="button" x-on:click="openDir()">OpenDir</button>
+        <button class="btn btn-outline-secondary" type="button" x-on:click="install()">Install</button>
       </div>
     </div>
   </form>
@@ -45,47 +46,65 @@
 {% endblock %}
 
 {% block scripts %}
-  {% include "component/xtermjs.html" %}
+  {#  {% include "component/xtermjs.html" %}#}
+
+  <script>
+    const KEEP_ALIVE = true;
+  </script>
+  <script src="{% static 'vendor/xtermjs/xterm-5.3.0.js' %}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.8.0/lib/xterm-addon-web-links.min.js"></script>
+  <script src="{% static 'js/webpty.js' %}"></script>
+
   <script>
     function TerminalForm() {
       return {
         submitForm() {
-          let form = document.getElementById("formTerminal");
-          fetch(form.action, {
-            method: 'POST',
-            body: new FormData(form),
-          })
-            .then(response => response.json())
-            .then(data => {
-              {#console.log(data);#}
-            })
-            .catch(error => console.error('Error:', error));
+          let type = 'command'
+          let tool = document.getElementById("tool").value;
+          let command = document.getElementById("command").value;
+
+          runCommand(type, tool, command)
         },
       };
     }
 
-    function reInstall() {
+    function openDir() {
+      let type = 'openDir'
       let tool = document.getElementById("tool").value;
-      if (tool) {
-        let formData = new FormData();
-        formData.append('type', 'reinstall');
-        formData.append('tool', tool);
-        formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
 
-        // Via Ajax
-        fetch('{% url 'command.run' %}', {
-          method: 'POST',
-          body: formData,
+      runCommand(type, tool)
+    }
+
+    function install() {
+      let type = 'install'
+      let tool = document.getElementById("tool").value;
+
+      runCommand(type, tool)
+    }
+
+    function runCommand(type, tool, command = null) {
+      let formData = new FormData();
+      formData.append('type', type);
+      formData.append('tool', tool);
+      formData.append('command', command);
+      formData.append('csrfmiddlewaretoken', '{{ csrf_token }}');
+
+      // Via Ajax
+      fetch('{% url 'command.run' %}', {
+        method: 'POST',
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          if (data.command) {
+            wsPty.send(JSON.stringify({action: "input", data: {key: data.command + '\n'}}));
+          }
         })
-          .then(response => response.json())
-          .then(data => {
-            {#console.log(data);#}
-          })
-          .catch(error => console.error('Error:', error));
-      } else {
-        term.write('Please select a tool!');
-        term.writeln('');
-      }
+        .catch(error => console.error('Error:', error));
+
     }
   </script>
 

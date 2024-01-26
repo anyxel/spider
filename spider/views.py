@@ -28,25 +28,44 @@ def terminal(request):
 
 def runCommand(request):
     message = 'Success'
-    command = request.POST.get('command')
+    command_type = request.POST.get('type')
     tool_name = request.POST.get('tool')
-    type = request.POST.get('type')
+    command = request.POST.get('command')
 
-    if not command:
-        message = "Please enter a command!"
+    tool = None
+    if tool_name:
+        tool = Tools.objects.get(name=str(tool_name))
 
     # Run
     try:
-        if type == 'reinstall':
-            tool = Tools.objects.get(name=str(tool_name))
+        if command_type == 'install':
+            data = {
+                'success': False,
+                'command': "cd /app && ./tools/scripts/" + tool.script
+            }
+            return JsonResponse(data)
 
-            send_message_to_websocket('Re-Installing ' + str(tool.name) + '...\r\n')
+        elif command_type == 'openDir':
+            tool_path = "/app/" + os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
 
-            re_install(tool)
-        elif type == 'input':
-            take_input(command)
+            data = {
+                'success': False,
+                'command': "cd " + tool_path
+            }
+            return JsonResponse(data)
+
         else:
-            run_command(command)
+            lang = tool.lang
+            tool_path = "/app/" + os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
+            filepath = tool_path + '/' + tool.run
+
+            command = lang + ' ' + filepath + ' ' + command
+
+            data = {
+                'success': True,
+                'command': command,
+            }
+            return JsonResponse(data)
     except Exception as e:
         message = str(e.args[0]) if e.args else "An unknown error occurred"
         run_command(message)

@@ -7,6 +7,8 @@ function callWithDelay(func, delay) {
   };
 }
 
+let wsPty = null;
+
 function startApp() {
   const delay = 50;
   const host = 'localhost:8282';
@@ -24,14 +26,14 @@ function startApp() {
   const webSocketProtocol = window.location.protocol.indexOf("https")
     ? "ws"
     : "wss";
-  const ws = new WebSocket(`${webSocketProtocol}://${host}${pathname}pty`);
+  wsPty = new WebSocket(`${webSocketProtocol}://${host}${pathname}pty`);
 
   terminal.loadAddon(fitAddon);
 
   function fitToScreen() {
     fitAddon.fit();
     console.log(terminal.cols, terminal.rows);
-    ws.send(
+    wsPty.send(
       JSON.stringify({
         action: "resize",
         data: {cols: terminal.cols, rows: terminal.rows},
@@ -41,18 +43,18 @@ function startApp() {
 
   window.onresize = callWithDelay(fitToScreen, delay);
 
-  ws.onopen = function () {
+  wsPty.onopen = function () {
     terminal.open(document.getElementById(terminalDivId));
     terminal.options.scrollback = scrollBackLimit;
     fitToScreen();
   };
 
-  ws.onmessage = function (event) {
+  wsPty.onmessage = function (event) {
     terminal.write(event.data);
   };
 
   terminal.onKey((event) => {
-    ws.send(JSON.stringify({action: "input", data: {key: event.key}}));
+    wsPty.send(JSON.stringify({action: "input", data: {key: event.key}}));
   });
 
   terminal.attachCustomKeyEventHandler((event) => {
@@ -62,14 +64,14 @@ function startApp() {
       event.type === "keydown"
     ) {
       navigator.clipboard.readText().then((clipText) => {
-        ws.send(JSON.stringify({action: "input", data: {key: clipText}}));
+        wsPty.send(JSON.stringify({action: "input", data: {key: clipText}}));
       });
       event.preventDefault();
     }
   });
 
   function sendPing() {
-    ws.send(JSON.stringify({action: "ping"}));
+    wsPty.send(JSON.stringify({action: "ping"}));
   }
 
   if (KEEP_ALIVE) {

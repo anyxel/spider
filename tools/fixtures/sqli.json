@@ -5,11 +5,10 @@
     "fields": {
       "name": "sqlmap",
       "lang": "python",
-      "url": "https://github.com/sqlmapproject/sqlmap",
-      "branch": "master",
       "folder": "sqlmap",
-      "filename": "sqlmap.py",
-      "has_dependencies": "False"
+      "run": "sqlmap.py",
+      "script": "",
+      "url": "https://github.com/sqlmapproject/sqlmap"
     }
   },
   {
@@ -18,11 +17,10 @@
     "fields": {
       "name": "Damn Small SQLi Scanner",
       "lang": "python",
-      "url": "https://github.com/stamparm/DSSS",
-      "branch": "master",
       "folder": "DSSS",
-      "filename": "dsss.py",
-      "has_dependencies": "False"
+      "run": "dsss.py",
+      "script": "",
+      "url": "https://github.com/stamparm/DSSS"
     }
   }
 ]

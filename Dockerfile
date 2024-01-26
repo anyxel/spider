@@ -7,7 +7,9 @@ RUN dnf update -y && dnf upgrade -y
 # Install necessay tools
 RUN dnf install yum-utils -y \
     && dnf install epel-release -y \
-    && dnf install gcc make -y
+    && dnf install gcc make -y \
+    && dnf install wget -y \
+    && dnf install unzip -y
 
 # Install Python
 RUN dnf install python3.11 -y
@@ -44,3 +46,4 @@ RUN cd $APP_HOME \
 
 # Extra
 RUN chmod +x *.sh
+RUN find tools/scripts -type f -exec chmod +x {} \;
