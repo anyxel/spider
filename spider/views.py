@@ -1,5 +1,4 @@
-import os
-
+from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -8,7 +7,7 @@ from tools.models import Tools
 
 
 def home(request):
-    app_name = os.getenv("APP_NAME")
+    app_name = "Anyxel Spider"
     return render(request, "home.html", {
         "app_name": app_name
     })
@@ -46,7 +45,7 @@ def runCommand(request):
             return JsonResponse(data)
 
         elif command_type == 'openDir':
-            tool_path = "/app/" + os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
+            tool_path = "/app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
 
             data = {
                 'success': False,
@@ -56,7 +55,7 @@ def runCommand(request):
 
         else:
             lang = tool.lang
-            tool_path = "/app/" + os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
+            tool_path = "/app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
             filepath = tool_path + '/' + tool.run
 
             command = lang + ' ' + filepath + ' ' + command

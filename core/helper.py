@@ -8,6 +8,7 @@ from io import BytesIO
 from zipfile import ZipFile
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+from django.conf import settings
 
 
 def run_command(command):
@@ -98,7 +99,7 @@ def download_and_unzip(tool):
     zipfile = ZipFile(BytesIO(http_response.read()))
 
     send_message_to_websocket('Extracting...\r\n')
-    extract_to = os.getenv('EXTERNAL_TOOLS_DIR')
+    extract_to = settings.EXTERNAL_TOOLS_DIR
     zipfile.extractall(path=extract_to)
 
     # Remove directory
@@ -127,7 +128,7 @@ def install_dependencies(repo_path):
 
 
 def re_install(tool):
-    tool_path = os.getenv('EXTERNAL_TOOLS_DIR') + '/' + tool.folder
+    tool_path = settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
     if os.path.exists(tool_path):
         try:
             shutil.rmtree(tool_path)

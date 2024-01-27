@@ -1,10 +1,3 @@
-"""
-Copyright 2019 by Satheesh Kumar D.
-
-Maintainer:
-    -> Satheesh Kumar D <mail@satheesh.dev>
-"""
-
 import fcntl
 import json
 import logging
@@ -22,7 +15,6 @@ from tornado.ioloop import IOLoop
 from tornado.options import define, options
 from tornado.web import RequestHandler, Application
 from tornado.websocket import WebSocketHandler, WebSocketClosedError
-
 
 define("process_id", 0)  # process id given by pty.fork()
 define("file_descriptor", 0)  # file descriptor given by pty.fork()
@@ -55,34 +47,11 @@ def read_and_update_web_terminal(instance):
 class IndexHandler(RequestHandler):
     def get(self):
         self.render(
-            "index.html",
+            "terminal.html",
             app_version=1,
             is_secured=True if options.password else False,
             keepalive=options.keepalive,
         )
-
-
-class AuthHandler(RequestHandler):
-    def set_default_headers(self):
-        self.set_header("Content-Type", "application/json")
-
-    def post(self):
-        if options.password:
-            data = json.loads(self.request.body) if self.request.body else {}
-            webpty_pass = data.get("webptyPass", None)
-            if webpty_pass and webpty_pass == options.password:
-                self.set_cookie("webptyPass", options.password)
-                self.write(json.dumps({"status": "OK"}))
-            else:
-                self.write(
-                    json.dumps({"status": "NOK", "message": "Invalid password!!"})
-                )
-        else:
-            self.write(
-                json.dumps(
-                    {"status": "OK", "message": "This is not an secured application"}
-                )
-            )
 
 
 class PtyHandler(WebSocketHandler):
@@ -131,16 +100,13 @@ class PtyHandler(WebSocketHandler):
 
 
 def start_server():
-    handlers = [(r"/", IndexHandler), (r"/pty", PtyHandler), (r"/auth", AuthHandler)]
-    settings = dict(static_path=os.path.join(os.path.dirname(__file__), "../static"))
+    handlers = [(r"/", IndexHandler), (r"/pty", PtyHandler)]
+    settings = dict(static_path=os.path.join(os.path.dirname(__file__), "../../../static"))
     app = Application(handlers, **settings)
     app.listen(options.port, "0.0.0.0")
 
     try:
         logging.info("Application listening on http://0.0.0.0:%s/", options.port)
-
-        if options.password:
-            logging.info("Application secured with the password!!")
 
         IOLoop.instance().start()
     except KeyboardInterrupt:

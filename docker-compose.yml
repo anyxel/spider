@@ -7,10 +7,8 @@ services:
       dockerfile: .docker/ubuntu.Dockerfile
     image: anyxel/spider:latest
     container_name: spider
-    environment:
-      - APP_NAME=${APP_NAME}
-      - SECRET_KEY=${SECRET_KEY}
-      - EXTERNAL_TOOLS_DIR=${EXTERNAL_TOOLS_DIR}
+    #    environment:
+    #      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./:/app
     ports:
