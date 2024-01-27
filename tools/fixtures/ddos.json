@@ -1,0 +1,14 @@
+[
+  {
+    "model": "tools.tools",
+    "pk": 50,
+    "fields": {
+      "name": "GoldenEye",
+      "lang": "python",
+      "folder": "GoldenEye",
+      "run": "goldeneye.py",
+      "script": "ddos/goldeneye.sh",
+      "url": "https://github.com/jseidl/GoldenEye"
+    }
+  }
+]

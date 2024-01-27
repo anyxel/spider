@@ -4,7 +4,7 @@
 source ./tools/scripts/config.sh
 
 # Variables
-tool_path="$et_dir/Sublist3r"
+tool_path="$et_dir/GoldenEye"
 zip_path="$et_dir/sublist3r.zip"
 
 echo "Cleaning..."
@@ -18,15 +18,12 @@ if [ -e "$zip_path" ]; then
     rm "$zip_path"
 fi
 
-echo "Downloading Sublist3r..."
-wget -O $zip_path https://github.com/aboul3la/Sublist3r/archive/master.zip
+echo "Downloading GoldenEye..."
+wget -O $zip_path https://github.com/jseidl/GoldenEye/archive/master.zip
 
 echo "Extracting..."
 unzip -o $zip_path -d /app/et
-mv $et_dir/Sublist3r-master $tool_path
-
-echo "Installing dependencies..."
-cd $tool_path && pip install -r requirements.txt
+mv $et_dir/GoldenEye-master $tool_path
 
 echo "Cleaning..."
 rm $zip_path

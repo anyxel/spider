@@ -7,6 +7,8 @@ services:
       dockerfile: .dev/ubuntu.Dockerfile
     image: anyxel/spider:dev
     container_name: spider_dev
+    #    environment:
+    #      - SECRET_KEY=${SECRET_KEY}
     volumes:
       - ./:/app
     ports:
