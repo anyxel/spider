@@ -32,7 +32,7 @@ RUN apt install sqlite -y && sqlite3 db.sqlite3 ""
 
 # Supervisor
 RUN apt install supervisor -y
-COPY ./.docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./.dev/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Workdir
 ENV APP_HOME=/app

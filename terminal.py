@@ -47,7 +47,7 @@ def read_and_update_web_terminal(instance):
 class IndexHandler(RequestHandler):
     def get(self):
         self.render(
-            "terminal.html",
+            "core/terminal/terminal.html",
             app_version=1,
             is_secured=True if options.password else False,
             keepalive=options.keepalive,
@@ -101,7 +101,7 @@ class PtyHandler(WebSocketHandler):
 
 def start_server():
     handlers = [(r"/", IndexHandler), (r"/pty", PtyHandler)]
-    settings = dict(static_path=os.path.join(os.path.dirname(__file__), "../../../static"))
+    settings = dict(static_path=os.path.join(os.path.dirname(__file__), "core/terminal/static"))
     app = Application(handlers, **settings)
     app.listen(options.port, "0.0.0.0")
 
