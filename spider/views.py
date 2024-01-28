@@ -2,6 +2,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from core.command import prepare_command
 from core.helper import run_command, send_message_to_websocket, re_install
 from tools.models import Tools
 
@@ -26,7 +27,6 @@ def terminal(request):
 
 
 def runCommand(request):
-    message = 'Success'
     command_type = request.POST.get('type')
     tool_name = request.POST.get('tool')
     command = request.POST.get('command')
@@ -45,24 +45,25 @@ def runCommand(request):
             return JsonResponse(data)
 
         elif command_type == 'openDir':
-            tool_path = "/app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
+            if tool.folder:
+                message = 'Success'
+                cmd = "cd /app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
+            else:
+                message = 'No directory found for this tool!'
+                cmd = ""
 
             data = {
                 'success': False,
-                'command': "cd " + tool_path
+                'message': message,
+                'command': cmd
             }
             return JsonResponse(data)
 
         else:
-            lang = tool.lang
-            tool_path = "/app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
-            filepath = tool_path + '/' + tool.run
-
-            command = lang + ' ' + filepath + ' ' + command
-
+            cmd = prepare_command(tool, command)
             data = {
                 'success': True,
-                'command': command,
+                'command': cmd,
             }
             return JsonResponse(data)
     except Exception as e:

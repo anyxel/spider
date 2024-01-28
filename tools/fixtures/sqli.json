@@ -1,7 +1,7 @@
 [
   {
     "model": "tools.tools",
-    "pk": 20,
+    "pk": 100,
     "fields": {
       "name": "sqlmap",
       "lang": "python",
@@ -13,7 +13,7 @@
   },
   {
     "model": "tools.tools",
-    "pk": 21,
+    "pk": 101,
     "fields": {
       "name": "Damn Small SQLi Scanner",
       "lang": "python",

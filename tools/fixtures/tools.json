@@ -7,7 +7,7 @@
       "lang": "python",
       "folder": "Sublist3r",
       "run": "sublist3r.py",
-      "script": "sublist3r.sh",
+      "script": "others/sublist3r.sh",
       "url": "https://github.com/aboul3la/Sublist3r"
     }
   },

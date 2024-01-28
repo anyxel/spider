@@ -1,0 +1,14 @@
+[
+  {
+    "model": "tools.tools",
+    "pk": 50,
+    "fields": {
+      "name": "Nmap",
+      "lang": "",
+      "folder": "",
+      "run": "nmap",
+      "script": "igt/nmap.sh",
+      "url": "https://github.com/nmap/nmap"
+    }
+  }
+]
