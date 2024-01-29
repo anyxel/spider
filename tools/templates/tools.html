@@ -6,6 +6,10 @@
 {% block head %}
   <link href="{% static 'vendor/xtermjs/xterm.css' %}" rel="stylesheet">
   <link href="{% static 'css/xterm-spider.css' %}" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+  {#  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>#}
+  <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css"/>
 {% endblock %}
 
 {% block content %}
@@ -14,12 +18,15 @@
   <form id="formTerminal" x-data="TerminalForm()" action="{% url 'tools.index' %}" @submit.prevent="submitForm">
     {% csrf_token %}
     <div class="input-group mb-3">
-      <select id="tool" name="name" class="form-select" style="max-width: 200px" required>
-        <option value="">Select a tool</option>
-        {% for tool in tools %}
-          <option value="{{ tool.name }}">{{ tool.name }}</option>
-        {% endfor %}
-      </select>
+      <input id="category" class="form-select" placeholder="Select category">
+      <input id="tool" class="form-select" placeholder="Select tool">
+
+      {#      <select id="tool" name="name" class="form-select select-field" style="max-width: 200px" required>#}
+      {#        <option value="">Tool</option>#}
+      {#        {% for tool in tools %}#}
+      {#          <option value="{{ tool.name }}">{{ tool.name }}</option>#}
+      {#        {% endfor %}#}
+      {#      </select>#}
       <input id="command" type="text" name="cmd" class="form-control" placeholder="Write a command" required>
       <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="submit">Submit</button>
@@ -46,15 +53,7 @@
 {% endblock %}
 
 {% block scripts %}
-  {#  {% include "component/xtermjs.html" %}#}
-
-  <script>
-    const KEEP_ALIVE = true;
-  </script>
-  <script src="{% static 'vendor/xtermjs/xterm-5.3.0.js' %}"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-web-links@0.8.0/lib/xterm-addon-web-links.min.js"></script>
-  <script src="{% static 'js/webpty.js' %}"></script>
+  {% include "component/xtermjs.html" %}
 
   <script>
     function TerminalForm() {
@@ -105,6 +104,89 @@
         })
         .catch(error => console.error('Error:', error));
 
+    }
+  </script>
+
+  <script>
+    let categories = [];
+
+    fetch('{% url 'tools.categories' %}', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+    })
+      .then(response => response.json())
+      .then(data => {
+        categories = data
+        loadCategories(categories)
+      })
+      .catch(error => {
+        console.error('Error fetching data:', error);
+      });
+
+
+    function loadCategories(categories) {
+      console.log(categories)
+
+      let category = document.getElementById('category');
+      let tagifyCategories = new Tagify(category, {
+        keepInvalidTags: false,
+        enforceWhitelist: true,
+        mode: "select",
+        whitelist: categories,
+        dropdown: {
+          enabled: 0,
+          closeOnSelect: true
+        }
+      })
+
+      tagifyCategories.on('change', onSelectCategory)
+
+      function onSelectCategory(e) {
+        cat = JSON.parse(e.detail.value)[0]['value'];
+        {#loadTools(cat)#}
+      }
+    }
+
+    loadTools()
+
+    let tools = []
+
+    function loadTools(category = null) {
+      fetch('{% url 'tools.tools' %}', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': '{{ csrf_token }}',
+        },
+        body: JSON.stringify({category: category}),
+      })
+        .then(response => response.json())
+        .then(data => {
+          tools = data
+          showTools(tools)
+        })
+        .catch(error => {
+          console.error('Error fetching data:', error);
+        });
+    }
+
+    function showTools(tools) {
+      console.log(tools)
+
+      let tool = document.getElementById('tool');
+      let tagifyTools = new Tagify(tool, {
+        keepInvalidTags: false,
+        enforceWhitelist: true,
+        mode: "select",
+        whitelist: tools,
+        dropdown: {
+          enabled: 0,
+          closeOnSelect: true
+        }
+      })
     }
   </script>
 

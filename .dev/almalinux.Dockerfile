@@ -37,12 +37,9 @@ ENV APP_HOME=/app
 RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
-# copy project
-COPY ./ $APP_HOME
-
-# Install dependencies
-RUN cd $APP_HOME \
-    && pip install --no-cache-dir -r requirements.txt
+# Copy project && install dependencies
+COPY . $APP_HOME
+RUN cd $APP_HOME && pip install --no-cache-dir -r requirements.txt
 
 # Extra
 RUN chmod +x *.sh
