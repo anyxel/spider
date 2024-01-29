@@ -3,7 +3,7 @@ from django.http import JsonResponse
 from django.shortcuts import render
 
 from core.command import prepare_command
-from core.helper import run_command, send_message_to_websocket, re_install
+from core.helper import run_command, send_message_to_websocket, re_install, run_command_short
 from tools.models import Tool
 
 
@@ -15,7 +15,7 @@ def home(request):
 
 
 def setup(request):
-    output = run_command('./setup.sh')
+    output = run_command_short('./setup.sh')
 
     return render(request, "setup.html", {
         'output': output,

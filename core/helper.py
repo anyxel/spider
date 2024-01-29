@@ -82,6 +82,11 @@ async def run_command_async(command):
     os.close(master)
 
 
+def run_command_short(cmd, input=""):
+    rst = subprocess.run(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode("utf-8"))
+    assert rst.returncode == 0, rst.stderr.decode("utf-8")
+    return rst.stdout.decode("utf-8")
+
 def is_file_exists(filepath):
     if os.path.isfile(filepath):
         return True

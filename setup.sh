@@ -1,19 +1,24 @@
 #!/bin/bash
 
-echo "Collecting static files:"
+echo "Collecting static files..."
 RUN python manage.py collectstatic --noinput
+echo "Collected successfully!"
+echo
 
-echo "Running migrations:"
+echo "Running migrations..."
 python manage.py makemigrations
 python manage.py migrate
+echo "Migration done!"
+echo
 
-echo ""
-echo "Load data:"
+echo
+echo "Load data..."
 python manage.py loaddata ./*/fixtures/category.json
 python manage.py loaddata ./*/fixtures/tools/*.json
+echo "Loaded successfully!"
 
-echo ""
-echo "Create external tools directory:"
+echo
+echo "Create external tools directory..."
 directory="et"
 if [ ! -d "$directory" ]; then
     echo "Creating directory: $directory"
