@@ -8,4 +8,4 @@
 <strong>Anyxel Spider</strong>
 </p>
 
-> Anyxel Spider is a free, open-source vulnerability scanner environment with pre-installed popular security testing tools.
+> Anyxel Spider is a free, open-source ethical hacking environment and vulnerability scanner with pre-configured popular security testing tools.
