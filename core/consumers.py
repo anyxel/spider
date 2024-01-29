@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import AsyncWebsocketConsumer
 
-from core.helper import run_command_async
+from core.command import run_command_async
 
 
 class ChatConsumer(AsyncWebsocketConsumer):

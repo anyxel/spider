@@ -2,8 +2,7 @@ from django.conf import settings
 from django.http import JsonResponse
 from django.shortcuts import render
 
-from core.command import prepare_command
-from core.helper import run_command, send_message_to_websocket, re_install, run_command_short
+from core.command import prepare_command, run_command_short, run_command
 from tools.models import Tool
 
 
