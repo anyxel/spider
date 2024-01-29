@@ -1,25 +1,27 @@
 [
   {
-    "model": "tools.tools",
-    "pk": 100,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "sqlmap",
       "lang": "python",
       "folder": "sqlmap",
       "run": "sqlmap.py",
       "script": "",
+      "category_slug": "sqli",
       "url": "https://github.com/sqlmapproject/sqlmap"
     }
   },
   {
-    "model": "tools.tools",
-    "pk": 101,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "Damn Small SQLi Scanner",
       "lang": "python",
       "folder": "DSSS",
       "run": "dsss.py",
       "script": "",
+      "category_slug": "sqli",
       "url": "https://github.com/stamparm/DSSS"
     }
   }

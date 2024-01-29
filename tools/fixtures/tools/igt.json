@@ -1,13 +1,14 @@
 [
   {
-    "model": "tools.tools",
-    "pk": 50,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "Nmap",
       "lang": "",
       "folder": "",
       "run": "nmap",
       "script": "igt/nmap.sh",
+      "category_slug": "igt",
       "url": "https://github.com/nmap/nmap"
     }
   }

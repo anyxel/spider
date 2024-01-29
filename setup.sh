@@ -9,7 +9,8 @@ python manage.py migrate
 
 echo ""
 echo "Load data:"
-python manage.py loaddata ./*/fixtures/*.json
+python manage.py loaddata ./*/fixtures/category.json
+python manage.py loaddata ./*/fixtures/tools/*.json
 
 echo ""
 echo "Create external tools directory:"

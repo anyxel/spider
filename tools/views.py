@@ -1,11 +1,11 @@
 from django.shortcuts import render
 
-from tools.models import Tools
+from tools.models import Tool
 
 
 def index(request):
     if request.method == 'GET':
-        tools = Tools.objects.all()
+        tools = Tool.objects.all().order_by('name')
 
         return render(request, "tools.html", {
             'tools': tools,

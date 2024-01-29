@@ -1,49 +1,53 @@
 [
   {
-    "model": "tools.tools",
-    "pk": 1,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "Sublist3r",
       "lang": "python",
       "folder": "Sublist3r",
       "run": "sublist3r.py",
       "script": "others/sublist3r.sh",
+      "category_slug": "others",
       "url": "https://github.com/aboul3la/Sublist3r"
     }
   },
   {
-    "model": "tools.tools",
-    "pk": 2,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "waymore",
       "lang": "python",
       "folder": "waymore",
       "run": "waymore.py",
       "script": "",
+      "category_slug": "others",
       "url": "https://github.com/xnl-h4ck3r/waymore"
     }
   },
   {
-    "model": "tools.tools",
-    "pk": 3,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "XSStrike",
       "lang": "python",
       "folder": "XSStrike",
       "run": "xsstrike.py",
       "script": "",
+      "category_slug": "others",
       "url": "https://github.com/s0md3v/XSStrike"
     }
   },
   {
-    "model": "tools.tools",
-    "pk": 4,
+    "model": "tools.tool",
+    "pk": null,
     "fields": {
       "name": "ReconDog",
       "lang": "python",
       "folder": "ReconDog",
       "run": "dog",
       "script": "",
+      "category_slug": "others",
       "url": "https://github.com/s0md3v/ReconDog"
     }
   }

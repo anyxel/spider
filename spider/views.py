@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from core.command import prepare_command
 from core.helper import run_command, send_message_to_websocket, re_install
-from tools.models import Tools
+from tools.models import Tool
 
 
 def home(request):
@@ -33,7 +33,7 @@ def runCommand(request):
 
     tool = None
     if tool_name:
-        tool = Tools.objects.get(name=str(tool_name))
+        tool = Tool.objects.get(name=str(tool_name))
 
     # Run
     try:
