@@ -15,7 +15,7 @@ class Tool(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     name = models.CharField(max_length=100, unique=True)
     lang = models.CharField(max_length=10)
-    folder = models.CharField(max_length=100)
+    directory = models.CharField(max_length=100)
     run = models.CharField(max_length=100)
     script = models.CharField(max_length=100)
     category_slug = models.SlugField(max_length=20)

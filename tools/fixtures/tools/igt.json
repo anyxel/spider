@@ -5,11 +5,37 @@
     "fields": {
       "name": "Nmap",
       "lang": "",
-      "folder": "",
+      "directory": "",
       "run": "nmap",
       "script": "igt/nmap.sh",
       "category_slug": "igt",
       "url": "https://github.com/nmap/nmap"
+    }
+  },
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "Sublist3r",
+      "lang": "python",
+      "directory": "Sublist3r",
+      "run": "sublist3r.py",
+      "script": "igt/sublist3r.sh",
+      "category_slug": "others",
+      "url": "https://github.com/aboul3la/Sublist3r"
+    }
+  },
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "ReconDog",
+      "lang": "python",
+      "directory": "ReconDog",
+      "run": "dog",
+      "script": "igt/ReconDog.sh",
+      "category_slug": "others",
+      "url": "https://github.com/s0md3v/ReconDog"
     }
   }
 ]

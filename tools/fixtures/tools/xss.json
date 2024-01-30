@@ -1,0 +1,15 @@
+[
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "XSStrike",
+      "lang": "python",
+      "directory": "XSStrike",
+      "run": "xsstrike.py",
+      "script": "xss/xsstrike.sh",
+      "category_slug": "others",
+      "url": "https://github.com/s0md3v/XSStrike"
+    }
+  }
+]

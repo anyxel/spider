@@ -94,7 +94,7 @@ def prepare_command(tool, command):
     if not lang:
         cmd = tool.run + ' ' + command
     else:
-        tool_path = "/app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
+        tool_path = "/app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.directory
         filepath = tool_path + '/' + tool.run
 
         cmd = lang + ' ' + filepath + ' ' + command

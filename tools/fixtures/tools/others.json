@@ -1,0 +1,15 @@
+[
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "WayMore",
+      "lang": "python",
+      "directory": "waymore",
+      "run": "waymore.py",
+      "script": "others/waymore.sh",
+      "category_slug": "others",
+      "url": "https://github.com/xnl-h4ck3r/waymore"
+    }
+  }
+]

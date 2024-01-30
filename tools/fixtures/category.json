@@ -27,6 +27,14 @@
     "model": "tools.category",
     "pk": null,
     "fields": {
+      "name": "XSS Attack",
+      "slug": "xss"
+    }
+  },
+  {
+    "model": "tools.category",
+    "pk": null,
+    "fields": {
       "name": "Others",
       "slug": "others"
     }

@@ -13,8 +13,9 @@ def index(request):
 
 def categories(request):
     data = list(Category.objects.values_list('name', flat=True))
+    sorted_data = sorted(data, key=lambda x: str(x).lower())
 
-    return JsonResponse(data, safe=False)
+    return JsonResponse(sorted_data, safe=False)
 
 
 def tools(request):
@@ -26,8 +27,10 @@ def tools(request):
         category_slug = category.slug
 
         data = list(Tool.objects.filter(category_slug=category_slug).values_list('name', flat=True))
+        data = sorted(data, key=lambda x: str(x).lower())
         return JsonResponse(data, safe=False)
 
     else:
         data = list(Tool.objects.values_list('name', flat=True))
+        data = sorted(data, key=lambda x: str(x).lower())
         return JsonResponse(data, safe=False)

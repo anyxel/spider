@@ -5,7 +5,7 @@
     "fields": {
       "name": "GoldenEye",
       "lang": "python",
-      "folder": "GoldenEye",
+      "directory": "GoldenEye",
       "run": "goldeneye.py",
       "script": "ddos/goldeneye.sh",
       "category_slug": "ddos",

@@ -44,9 +44,9 @@ def runCommand(request):
             return JsonResponse(data)
 
         elif command_type == 'openDir':
-            if tool.folder:
+            if tool.directory:
                 message = 'Success'
-                cmd = "cd /app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.folder
+                cmd = "cd /app/" + settings.EXTERNAL_TOOLS_DIR + '/' + tool.directory
             else:
                 message = 'No directory found for this tool!'
                 cmd = ""

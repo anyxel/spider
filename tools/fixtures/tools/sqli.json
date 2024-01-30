@@ -5,9 +5,9 @@
     "fields": {
       "name": "sqlmap",
       "lang": "python",
-      "folder": "sqlmap",
+      "directory": "sqlmap",
       "run": "sqlmap.py",
-      "script": "",
+      "script": "sqli/sqlmap.sh",
       "category_slug": "sqli",
       "url": "https://github.com/sqlmapproject/sqlmap"
     }
@@ -18,9 +18,9 @@
     "fields": {
       "name": "Damn Small SQLi Scanner",
       "lang": "python",
-      "folder": "DSSS",
+      "directory": "DSSS",
       "run": "dsss.py",
-      "script": "",
+      "script": "sqli/dsss.sh",
       "category_slug": "sqli",
       "url": "https://github.com/stamparm/DSSS"
     }
