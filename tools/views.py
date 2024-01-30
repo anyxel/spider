@@ -1,3 +1,5 @@
+import json
+
 from django.http import JsonResponse
 from django.shortcuts import render
 
@@ -6,13 +8,7 @@ from tools.models import Tool, Category
 
 def index(request):
     if request.method == 'GET':
-        categories = Category.objects.all().order_by('name')
-        tools = Tool.objects.all().order_by('name')
-
-        return render(request, "tools.html", {
-            'categories': categories,
-            'tools': tools,
-        })
+        return render(request, "tools.html")
 
 
 def categories(request):
@@ -22,6 +18,16 @@ def categories(request):
 
 
 def tools(request):
-    data = list(Tool.objects.values_list('name', flat=True))
+    data = json.loads(request.body.decode('utf-8'))
 
-    return JsonResponse(data, safe=False)
+    category_name = data.get('category', None)
+    if category_name:
+        category = Category.objects.get(name=str(category_name))
+        category_slug = category.slug
+
+        data = list(Tool.objects.filter(category_slug=category_slug).values_list('name', flat=True))
+        return JsonResponse(data, safe=False)
+
+    else:
+        data = list(Tool.objects.values_list('name', flat=True))
+        return JsonResponse(data, safe=False)

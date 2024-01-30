@@ -1,12 +1,15 @@
 import os
 import asyncio
 import subprocess
-import pty
 
 from django.conf import settings
 
 from core.helper import send_message_to_websocket_async, send_message_to_websocket
 
+if os.name == "nt":
+    import msvcrt
+else:
+    import pty
 
 def run_command(command):
     # Start a subprocess with a pseudo-terminal

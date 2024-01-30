@@ -12,6 +12,6 @@ services:
     volumes:
       - ./:/app
     ports:
-      - "8000:8000"
+      - "8001:8000"
       - "8282:8282"
     restart: always

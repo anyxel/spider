@@ -2,11 +2,9 @@ import fcntl
 import json
 import logging
 import os
-import pty
 import select
 import struct
 import subprocess
-import termios
 
 from argparse import ArgumentParser
 
@@ -15,6 +13,12 @@ from tornado.ioloop import IOLoop
 from tornado.options import define, options
 from tornado.web import RequestHandler, Application
 from tornado.websocket import WebSocketHandler, WebSocketClosedError
+
+if os.name == "nt":
+    import msvcrt
+else:
+    import pty
+    import termios
 
 define("process_id", 0)  # process id given by pty.fork()
 define("file_descriptor", 0)  # file descriptor given by pty.fork()
