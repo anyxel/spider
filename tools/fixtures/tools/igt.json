@@ -9,7 +9,7 @@
       "run": "nmap",
       "script": "igt/nmap.sh",
       "category_slug": "igt",
-      "url": "https://github.com/nmap/nmap"
+      "git_repo": "https://github.com/nmap/nmap"
     }
   },
   {
@@ -22,7 +22,7 @@
       "run": "sublist3r.py",
       "script": "igt/sublist3r.sh",
       "category_slug": "others",
-      "url": "https://github.com/aboul3la/Sublist3r"
+      "git_repo": "https://github.com/aboul3la/Sublist3r"
     }
   },
   {
@@ -35,7 +35,7 @@
       "run": "dog",
       "script": "igt/ReconDog.sh",
       "category_slug": "others",
-      "url": "https://github.com/s0md3v/ReconDog"
+      "git_repo": "https://github.com/s0md3v/ReconDog"
     }
   }
 ]

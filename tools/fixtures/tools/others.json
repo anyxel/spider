@@ -9,7 +9,7 @@
       "run": "waymore.py",
       "script": "others/waymore.sh",
       "category_slug": "others",
-      "url": "https://github.com/xnl-h4ck3r/waymore"
+      "git_repo": "https://github.com/xnl-h4ck3r/waymore"
     }
   }
 ]

@@ -9,7 +9,7 @@
       "run": "xsstrike.py",
       "script": "xss/xsstrike.sh",
       "category_slug": "others",
-      "url": "https://github.com/s0md3v/XSStrike"
+      "git_repo": "https://github.com/s0md3v/XSStrike"
     }
   }
 ]

@@ -9,7 +9,7 @@
       "run": "goldeneye.py",
       "script": "ddos/goldeneye.sh",
       "category_slug": "ddos",
-      "url": "https://github.com/jseidl/GoldenEye"
+      "git_repo": "https://github.com/jseidl/GoldenEye"
     }
   }
 ]

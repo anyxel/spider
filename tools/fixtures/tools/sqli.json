@@ -9,7 +9,7 @@
       "run": "sqlmap.py",
       "script": "sqli/sqlmap.sh",
       "category_slug": "sqli",
-      "url": "https://github.com/sqlmapproject/sqlmap"
+      "git_repo": "https://github.com/sqlmapproject/sqlmap"
     }
   },
   {
@@ -22,7 +22,7 @@
       "run": "dsss.py",
       "script": "sqli/dsss.sh",
       "category_slug": "sqli",
-      "url": "https://github.com/stamparm/DSSS"
+      "git_repo": "https://github.com/stamparm/DSSS"
     }
   }
 ]

@@ -13,8 +13,8 @@ echo
 
 echo
 echo "Load data..."
-python manage.py loaddata ./*/fixtures/category.json
-python manage.py loaddata ./*/fixtures/tools/*.json
+python manage.py loaddata ./tools/fixtures/category.json
+python manage.py loaddata ./tools/fixtures/tools/*.json
 echo "Loaded successfully!"
 
 echo

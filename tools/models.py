@@ -19,7 +19,7 @@ class Tool(models.Model):
     run = models.CharField(max_length=100)
     script = models.CharField(max_length=100)
     category_slug = models.SlugField(max_length=20)
-    url = models.TextField()
+    git_repo = models.TextField()
 
     class Meta:
         verbose_name = "Tool"
