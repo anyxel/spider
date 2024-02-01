@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Include shells
 source ./core/scripts/libs/config.sh
 

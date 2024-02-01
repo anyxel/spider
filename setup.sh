@@ -12,7 +12,8 @@ echo "Migration done!"
 echo
 
 echo
-echo "Load data..."
+echo "Flush old data and load new data..."
+echo "yes" | python manage.py flush
 python manage.py loaddata ./tools/fixtures/category.json
 python manage.py loaddata ./tools/fixtures/tools/*.json
 echo "Loaded successfully!"

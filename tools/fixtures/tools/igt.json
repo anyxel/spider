@@ -37,5 +37,18 @@
       "category_slug": "others",
       "git_repo": "https://github.com/s0md3v/ReconDog"
     }
+  },
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "Hakrawler",
+      "lang": "",
+      "directory": "",
+      "run": "~/go/bin/hakrawler",
+      "script": "igt/hakrawler.sh",
+      "category_slug": "igt",
+      "git_repo": "https://github.com/hakluke/hakrawler"
+    }
   }
 ]
