@@ -4,8 +4,6 @@
     "pk": null,
     "fields": {
       "name": "Nmap",
-      "lang": "",
-      "directory": "",
       "run": "nmap",
       "script": "igt/nmap.sh",
       "category_slug": "igt",
@@ -43,12 +41,23 @@
     "pk": null,
     "fields": {
       "name": "Hakrawler",
-      "lang": "",
-      "directory": "",
       "run": "~/go/bin/hakrawler",
       "script": "igt/hakrawler.sh",
       "category_slug": "igt",
-      "git_repo": "https://github.com/hakluke/hakrawler"
+      "git_repo": "https://github.com/hakluke/hakrawler",
+      "short_desc": "Simple, fast web crawler designed for easy, quick discovery of endpoints and assets within a web application."
+    }
+  },
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "Hakrevdns",
+      "run": "~/go/bin/hakrevdns",
+      "script": "igt/hakrevdns.sh",
+      "category_slug": "igt",
+      "git_repo": "https://github.com/hakluke/hakrevdns",
+      "short_desc": "Small, fast tool for performing reverse DNS lookups en masse."
     }
   }
 ]

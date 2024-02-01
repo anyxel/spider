@@ -14,12 +14,13 @@ class Category(models.Model):
 class Tool(models.Model):
     id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')
     name = models.CharField(max_length=100, unique=True)
-    lang = models.CharField(max_length=10)
-    directory = models.CharField(max_length=100)
+    lang = models.CharField(max_length=10, null=True, blank=True)
+    directory = models.CharField(max_length=100, null=True, blank=True)
     run = models.CharField(max_length=100)
     script = models.CharField(max_length=100)
     category_slug = models.SlugField(max_length=20)
     git_repo = models.TextField()
+    short_desc = models.TextField(null=True, blank=True)
 
     class Meta:
         verbose_name = "Tool"
