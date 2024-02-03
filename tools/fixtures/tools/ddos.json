@@ -9,7 +9,8 @@
       "run": "goldeneye.py",
       "script": "ddos/goldeneye.sh",
       "category_slug": "ddos",
-      "git_repo": "https://github.com/jseidl/GoldenEye"
+      "git_repo": "https://github.com/jseidl/GoldenEye",
+      "short_desc": "GoldenEye Layer 7 (KeepAlive+NoCache) DoS Test Tool"
     }
   }
 ]

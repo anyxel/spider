@@ -5,7 +5,7 @@ source ./core/scripts/libs/config.sh
 
 if command -v nmap &> /dev/null
 then
-    echo_yellow "Nmap is already installed."
+    echo_yellow "Nmap is already installed!"
 else
     echo "Installing Nmap..."
     try apt install nmap -y

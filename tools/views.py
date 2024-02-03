@@ -1,8 +1,11 @@
 import json
 
+from django.core.exceptions import ObjectDoesNotExist
+from django.forms import model_to_dict
 from django.http import JsonResponse
 from django.shortcuts import render
 
+from core.command import prepare_command
 from tools.models import Tool, Category
 
 
@@ -34,3 +37,21 @@ def tools(request):
         data = list(Tool.objects.values_list('name', flat=True))
         data = sorted(data, key=lambda x: str(x).lower())
         return JsonResponse(data, safe=False)
+
+
+def getTool(request):
+    data = json.loads(request.body.decode('utf-8'))
+    tool_name = data.get('tool', None)
+
+    try:
+        tool = Tool.objects.get(name=str(tool_name))
+        tool_dict = model_to_dict(tool)
+
+        tool_dict['command'] = prepare_command(tool, '')
+
+        category = Category.objects.get(slug=str(tool.category_slug))
+        tool_dict['category'] = category.name
+
+        return JsonResponse(tool_dict, safe=False)
+    except ObjectDoesNotExist:
+        return JsonResponse({'success': False, 'message': 'Tool not found'}, status=404)

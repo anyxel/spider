@@ -8,8 +8,9 @@
       "directory": "XSStrike",
       "run": "xsstrike.py",
       "script": "xss/xsstrike.sh",
-      "category_slug": "others",
-      "git_repo": "https://github.com/s0md3v/XSStrike"
+      "category_slug": "xss",
+      "git_repo": "https://github.com/s0md3v/XSStrike",
+      "short_desc": "Most advanced XSS scanner."
     }
   }
 ]

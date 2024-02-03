@@ -7,7 +7,9 @@
       "run": "nmap",
       "script": "igt/nmap.sh",
       "category_slug": "igt",
-      "git_repo": "https://github.com/nmap/nmap"
+      "git_repo": "https://github.com/nmap/nmap",
+      "website": "https://nmap.org",
+      "short_desc": "Nmap - the Network Mapper"
     }
   },
   {
@@ -20,7 +22,8 @@
       "run": "sublist3r.py",
       "script": "igt/sublist3r.sh",
       "category_slug": "others",
-      "git_repo": "https://github.com/aboul3la/Sublist3r"
+      "git_repo": "https://github.com/aboul3la/Sublist3r",
+      "short_desc": "Fast subdomains enumeration tool for penetration testers."
     }
   },
   {
@@ -33,7 +36,8 @@
       "run": "dog",
       "script": "igt/ReconDog.sh",
       "category_slug": "others",
-      "git_repo": "https://github.com/s0md3v/ReconDog"
+      "git_repo": "https://github.com/s0md3v/ReconDog",
+      "short_desc": "Reconnaissance Swiss Army Knife"
     }
   },
   {
@@ -45,6 +49,7 @@
       "script": "igt/hakrawler.sh",
       "category_slug": "igt",
       "git_repo": "https://github.com/hakluke/hakrawler",
+      "website": "https://hakluke.com",
       "short_desc": "Simple, fast web crawler designed for easy, quick discovery of endpoints and assets within a web application."
     }
   },
@@ -57,6 +62,7 @@
       "script": "igt/hakrevdns.sh",
       "category_slug": "igt",
       "git_repo": "https://github.com/hakluke/hakrevdns",
+      "website": "https://hakluke.com",
       "short_desc": "Small, fast tool for performing reverse DNS lookups en masse."
     }
   }

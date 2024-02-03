@@ -46,6 +46,7 @@ RUN cd $APP_HOME && pip install --no-cache-dir -r requirements.txt
 # Extra
 RUN chmod +x *.sh
 RUN chmod +x terminal.py
+RUN find core/scripts -type f -exec chmod +x {} \;
 RUN find tools/scripts -type f -exec chmod +x {} \;
 
 # Run

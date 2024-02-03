@@ -9,7 +9,8 @@
       "run": "sqlmap.py",
       "script": "sqli/sqlmap.sh",
       "category_slug": "sqli",
-      "git_repo": "https://github.com/sqlmapproject/sqlmap"
+      "git_repo": "https://github.com/sqlmapproject/sqlmap",
+      "short_desc": "Automatic SQL injection and database takeover tool."
     }
   },
   {
@@ -22,7 +23,8 @@
       "run": "dsss.py",
       "script": "sqli/dsss.sh",
       "category_slug": "sqli",
-      "git_repo": "https://github.com/stamparm/DSSS"
+      "git_repo": "https://github.com/stamparm/DSSS",
+      "short_desc": "Damn Small SQLi Scanner"
     }
   }
 ]

@@ -19,7 +19,8 @@ class Tool(models.Model):
     run = models.CharField(max_length=100)
     script = models.CharField(max_length=100)
     category_slug = models.SlugField(max_length=20)
-    git_repo = models.TextField()
+    git_repo = models.TextField(null=True, blank=True)
+    website = models.CharField(max_length=191, null=True, blank=True)
     short_desc = models.TextField(null=True, blank=True)
 
     class Meta:
