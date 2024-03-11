@@ -4,11 +4,9 @@ services:
   spider:
     build:
       context: .
-      dockerfile: .docker/dev/ubuntu.Dockerfile
-    image: anyxel/spider:dev
-    container_name: spider_dev
-    #    environment:
-    #      - SECRET_KEY=${SECRET_KEY}
+      dockerfile: .docker/prod/ubuntu.Dockerfile
+    image: anyxel/spider:beta
+    container_name: spider
     volumes:
       - ./:/app
     ports:

@@ -32,7 +32,7 @@ RUN apt install sqlite -y && sqlite3 db.sqlite3 ""
 
 # Supervisor
 RUN apt install supervisor -y
-COPY ./.docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./.docker/prod/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Workdir
 ENV APP_HOME=/app
@@ -40,7 +40,7 @@ RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 
 # Copy project && install dependencies
-COPY . $APP_HOME
+COPY .. $APP_HOME
 RUN cd $APP_HOME && pip install --no-cache-dir -r requirements.txt
 
 # Extra
