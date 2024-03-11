@@ -12,5 +12,18 @@
       "git_repo": "https://github.com/s0md3v/XSStrike",
       "short_desc": "Most advanced XSS scanner."
     }
+  },
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "Dalfox",
+      "run": "~/go/bin/dalfox",
+      "script": "xss/dalfox.sh",
+      "category_slug": "xss",
+      "git_repo": "https://github.com/hahwul/dalfox",
+      "website": "https://dalfox.hahwul.com",
+      "short_desc": "Dalfox is a powerful open-source XSS scanner and utility focused on automation."
+    }
   }
 ]
