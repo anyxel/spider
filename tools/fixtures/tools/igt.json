@@ -65,5 +65,17 @@
       "website": "https://hakluke.com",
       "short_desc": "Small, fast tool for performing reverse DNS lookups en masse."
     }
+  },
+  {
+    "model": "tools.tool",
+    "pk": null,
+    "fields": {
+      "name": "GoSpider",
+      "run": "~/go/bin/gospider",
+      "script": "igt/gospider.sh",
+      "category_slug": "igt",
+      "git_repo": "https://github.com/jaeles-project/gospider",
+      "short_desc": "Fast web spider written in Go."
+    }
   }
 ]
