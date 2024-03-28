@@ -1,9 +1,9 @@
-asgiref==3.7.2
+asgiref==3.8.1
 channels==4.0.0
-daphne==4.0.0
-Django==5.0.2
-packaging==23.2
+daphne==4.1.0
+Django==5.0.3
+packaging==24.0
 simplejson==3.19.2
 sqlparse==0.4.4
-tzdata==2023.4
+tzdata==2024.1
 whitenoise==6.6.0
